@@ -1,0 +1,67 @@
+[package]
+    authors       = ["Eric Evans <ciresnave@gmail.com>"]
+    categories    = ["development-tools", "development-tools::ffi"]
+    description   = "Automatically generate safe, idiomatic Rust wrapper crates from C/C++ libraries"
+    documentation = "https://github.com/ciresnave/bindings-generat#readme"
+    edition       = "2024"
+    homepage      = "https://github.com/ciresnave/bindings-generat"
+    keywords      = ["bindgen", "code-generation", "ffi", "wrapper"]
+    license       = "MIT OR Apache-2.0"
+    name          = "bindings-generat"
+    repository    = "https://github.com/ciresnave/bindings-generat"
+    version       = "0.1.0"
+
+[dependencies]
+    # CLI
+    clap      = { version = "4.5", features = ["cargo", "derive"] }
+    dialoguer = "0.12"
+    indicatif = "0.18"
+
+    # FFI Generation
+    bindgen = "0.72"
+
+    # Code Analysis & Generation
+    handlebars   = "6"
+    prettyplease = "0.2"
+    proc-macro2  = "1"
+    quote        = "1"
+    syn          = { version = "2.0", features = ["full", "parsing", "visit"] }
+
+    # LLM Integration
+    reqwest    = { version = "0.12", features = ["blocking", "json"] }
+    serde      = { version = "1.0", features = ["derive"] }
+    serde_json = "1.0"
+
+    # Utilities
+    anyhow    = "1"
+    chrono    = { version = "0.4", features = ["serde"] }
+    dirs      = "6"
+    regex     = "1"
+    sha2      = "0.10"
+    tempfile  = "3"
+    thiserror = "2"
+    toml      = "0.9"
+    uuid      = { version = "1.11", features = ["v4"] }
+    walkdir   = "2"
+
+    # Archive support
+    flate2 = "1"
+    tar    = "0.4"
+    zip    = "6"
+
+    # Logging
+    tracing            = "0.1"
+    tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+    assert_cmd = "2"
+    predicates = "3"
+    tempfile   = "3"
+
+[[bin]]
+    name = "bindings-generat"
+    path = "src/main.rs"
+
+[lib]
+    name = "bindings_generat"
+    path = "src/lib.rs"
