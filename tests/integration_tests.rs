@@ -125,7 +125,8 @@ fn test_cli_dry_run_with_existing_output() {
     cmd.arg(&fixture_path)
         .arg("--output")
         .arg(&output_path)
-        .arg("--dry-run");
+        .arg("--dry-run")
+        .arg("--no-llm");
 
     // Should succeed with --dry-run even if output exists
     cmd.assert().success();
@@ -142,7 +143,8 @@ fn test_cli_verbose_flag() {
     cmd.arg(&fixture_path)
         .arg("--output")
         .arg(&output_path)
-        .arg("--verbose");
+        .arg("--verbose")
+        .arg("--no-llm");
 
     cmd.assert().success();
 }
@@ -208,7 +210,8 @@ fn test_cli_lib_name_override() {
         .arg("--output")
         .arg(&output_path)
         .arg("--lib-name")
-        .arg("my_custom_lib");
+        .arg("my_custom_lib")
+        .arg("--no-llm");
 
     cmd.assert().success();
 
@@ -229,7 +232,8 @@ fn test_cli_style_option() {
         .arg("--output")
         .arg(&output_path)
         .arg("--style")
-        .arg("minimal");
+        .arg("minimal")
+        .arg("--no-llm");
 
     cmd.assert().success();
 }
@@ -264,7 +268,8 @@ fn test_cli_headers_glob() {
         .arg("--output")
         .arg(&output_path)
         .arg("--headers")
-        .arg("*.h");
+        .arg("*.h")
+        .arg("--no-llm");
 
     cmd.assert().success();
 }
@@ -282,7 +287,8 @@ fn test_cli_cache_dir_option() {
         .arg("--output")
         .arg(&output_path)
         .arg("--cache-dir")
-        .arg(&cache_dir);
+        .arg(&cache_dir)
+        .arg("--no-llm");
 
     cmd.assert().success();
 }
