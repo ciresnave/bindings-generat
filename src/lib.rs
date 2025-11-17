@@ -22,6 +22,7 @@ pub struct BindingsGenerator {
     config: Config,
     // Store intermediate results
     ffi_info: Option<ffi::FfiInfo>,
+    ffi_bindings_code: Option<String>,
     analysis: Option<analyzer::AnalysisResult>,
     generated_code: Option<generator::GeneratedCode>,
     // LLM enhancements
@@ -36,6 +37,7 @@ impl BindingsGenerator {
         Self {
             config,
             ffi_info: None,
+            ffi_bindings_code: None,
             analysis: None,
             generated_code: None,
             llm_enhancements: None,
@@ -141,7 +143,8 @@ impl BindingsGenerator {
 
         info!("Starting FFI generation phase");
 
-        let ffi_info = ffi::generate_and_parse_ffi(headers, lib_name, source_path)?;
+        let (ffi_info, bindings_code) =
+            ffi::generate_and_parse_ffi(headers, lib_name, source_path)?;
         pb.println(format!(
             "   ✓ Generated FFI bindings ({} functions, {} types)",
             ffi_info.functions.len(),
@@ -149,6 +152,7 @@ impl BindingsGenerator {
         ));
 
         self.ffi_info = Some(ffi_info);
+        self.ffi_bindings_code = Some(bindings_code);
 
         pb.finish_and_clear();
         Ok(())
@@ -395,11 +399,21 @@ impl BindingsGenerator {
         info!("Starting output phase");
 
         let generated = self.generated_code.as_ref().expect("Code not generated");
+        let bindings = self
+            .ffi_bindings_code
+            .as_ref()
+            .expect("FFI bindings not generated");
 
-        output::output_generated_code(&self.config.output_path, &generated.lib_rs, lib_name)?;
+        output::output_generated_code(
+            &self.config.output_path,
+            &generated.lib_rs,
+            bindings,
+            lib_name,
+        )?;
 
         pb.println("   ✓ Created Cargo.toml");
         pb.println("   ✓ Created src/lib.rs");
+        pb.println("   ✓ Created src/ffi.rs");
         pb.println("   ✓ Created build.rs");
 
         pb.finish_and_clear();

@@ -4,7 +4,12 @@ use std::path::Path;
 use tracing::{debug, info};
 
 /// Write generated code to output directory
-pub fn write_generated_code(output_dir: &Path, lib_rs_content: &str, lib_name: &str) -> Result<()> {
+pub fn write_generated_code(
+    output_dir: &Path,
+    lib_rs_content: &str,
+    ffi_bindings: &str,
+    lib_name: &str,
+) -> Result<()> {
     info!("Writing generated code to {}", output_dir.display());
 
     // Create output directory structure
@@ -14,9 +19,9 @@ pub fn write_generated_code(output_dir: &Path, lib_rs_content: &str, lib_name: &
     let lib_rs_path = output_dir.join("src").join("lib.rs");
     debug!("Writing {}", lib_rs_path.display());
     fs::write(&lib_rs_path, lib_rs_content).context("Failed to write lib.rs")?;
-    
-    // Write placeholder src/ffi.rs
-    write_ffi_placeholder(output_dir)?;
+
+    // Write src/ffi.rs with actual FFI bindings
+    write_ffi_bindings(output_dir, ffi_bindings)?;
 
     // Write Cargo.toml
     write_cargo_toml(output_dir, lib_name)?;
@@ -113,31 +118,11 @@ fn write_gitignore(output_dir: &Path) -> Result<()> {
     Ok(())
 }
 
-fn write_ffi_placeholder(output_dir: &Path) -> Result<()> {
+fn write_ffi_bindings(output_dir: &Path, bindings: &str) -> Result<()> {
     let ffi_rs_path = output_dir.join("src").join("ffi.rs");
     debug!("Writing {}", ffi_rs_path.display());
 
-    let content = r#"// FFI bindings
-// This file should contain the raw bindgen-generated bindings
-// Run bindgen on your C headers and place the output here
-
-// Example: If you used bindgen to generate bindings, paste them here
-// Or use a build script to generate them at compile time
-
-#![allow(dead_code)]
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(non_upper_case_globals)]
-
-// TODO: Add your FFI bindings here
-// You can generate them with:
-//   bindgen your_header.h -o src/ffi.rs
-
-// For now, this is a placeholder that will cause compilation errors
-// until you add the actual bindings
-"#;
-
-    fs::write(&ffi_rs_path, content).context("Failed to write ffi.rs")?;
+    fs::write(&ffi_rs_path, bindings).context("Failed to write ffi.rs")?;
 
     Ok(())
 }
