@@ -31,12 +31,15 @@ pub fn generate_code(
     // Generate header
     generate_header(&mut lib_rs, lib_name);
 
-    // Generate error enum
+    // Always generate error enum (even if no error pattern detected)
     if let Some(error_enum) = analysis.error_patterns.error_enums.first() {
         lib_rs.push_str(&errors::generate_error_enum(error_enum, enhancements));
+    } else {
+        // Generate a basic error type
+        lib_rs.push_str(&errors::generate_basic_error());
     }
 
-    // Generate RAII wrappers
+    // Generate RAII wrappers for handle types with lifecycle pairs
     for pair in &analysis.raii_patterns.lifecycle_pairs {
         if let Some(handle) = analysis
             .raii_patterns
@@ -47,6 +50,23 @@ pub fn generate_code(
             let wrapper = wrappers::generate_raii_wrapper(handle, pair, lib_name);
             lib_rs.push_str(&wrapper.code);
         }
+    }
+
+    // Generate basic wrapper types for handle types WITHOUT lifecycle pairs
+    // These don't have Drop implementation, but provide a safe container
+    for handle in &analysis.raii_patterns.handle_types {
+        // Skip if already generated with lifecycle pair
+        if analysis
+            .raii_patterns
+            .lifecycle_pairs
+            .iter()
+            .any(|p| p.handle_type == handle.name)
+        {
+            continue;
+        }
+
+        let wrapper = wrappers::generate_basic_wrapper(handle);
+        lib_rs.push_str(&wrapper.code);
     }
 
     // Generate methods for each wrapper
@@ -76,15 +96,17 @@ fn generate_header(code: &mut String, lib_name: &str) {
     writeln!(code).unwrap();
     writeln!(code, "#![allow(dead_code)]").unwrap();
     writeln!(code, "#![allow(non_camel_case_types)]").unwrap();
+    writeln!(code, "#![allow(non_snake_case)]").unwrap();
+    writeln!(code, "#![allow(non_upper_case_globals)]").unwrap();
     writeln!(code).unwrap();
-    writeln!(code, "mod ffi {{").unwrap();
-    writeln!(code, "    // FFI bindings will be included here").unwrap();
+    writeln!(code, "// Note: FFI bindings should be in src/ffi.rs").unwrap();
     writeln!(
         code,
-        "    // include!(concat!(env!(\"OUT_DIR\"), \"/bindings.rs\"));"
+        "// Run bindgen on your headers and place the output there"
     )
     .unwrap();
-    writeln!(code, "}}").unwrap();
+    writeln!(code, "#[path = \"ffi.rs\"]").unwrap();
+    writeln!(code, "mod ffi;").unwrap();
     writeln!(code).unwrap();
 }
 
