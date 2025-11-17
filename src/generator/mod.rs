@@ -107,8 +107,11 @@ fn generate_methods_for_handle(
         return Ok(());
     }
 
-    // Generate methods
-    writeln!(code, "// Additional methods for {}", handle.name).unwrap();
+    // Convert handle type name to Rust type name (PascalCase)
+    let type_name = wrappers::to_rust_type_name(&handle.name);
+
+    // Collect methods first
+    let mut methods = Vec::new();
     for func in handle_functions {
         // Skip create/destroy functions (already handled)
         if handle.create_functions.contains(&func.name)
@@ -118,8 +121,19 @@ fn generate_methods_for_handle(
         }
 
         if let Some(method_code) = methods::generate_safe_method(func, Some(&handle.name)) {
+            methods.push(method_code);
+        }
+    }
+
+    // Only generate impl block if there are methods
+    if !methods.is_empty() {
+        writeln!(code, "// Additional methods for {}", handle.name).unwrap();
+        writeln!(code, "impl {} {{", type_name).unwrap();
+        for method_code in methods {
             code.push_str(&method_code);
         }
+        writeln!(code, "}}").unwrap();
+        writeln!(code).unwrap();
     }
 
     Ok(())
