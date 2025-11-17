@@ -9,6 +9,43 @@ pub fn generate_safe_method(func: &FfiFunction, handle_type: Option<&str>) -> Op
 
     let mut code = String::new();
 
+    // Check if first parameter is an output parameter (pointer to handle type)
+    let is_output_param = if let Some(handle) = handle_type {
+        func.params
+            .first()
+            .map(|p| {
+                // Check if it's a mutable pointer to the handle type
+                // Output parameters are typically: *mut HandleType (where HandleType is itself a pointer)
+                // So in practice: *mut cudaStream_t where cudaStream_t = *mut CUstream_st
+                let has_mut_ptr = p.ty.contains("* mut") || p.ty.contains("*mut");
+                let has_handle = p.ty.contains(handle);
+
+                let is_output = has_mut_ptr && has_handle;
+
+                if is_output {
+                    debug!(
+                        "Detected output parameter in {}: param '{}' has type '{}'",
+                        func.name, p.name, p.ty
+                    );
+                }
+
+                is_output
+            })
+            .unwrap_or(false)
+    } else {
+        false
+    };
+
+    // If it's an output parameter, skip it - should be handled as a constructor
+    if is_output_param {
+        debug!(
+            "Skipping {} - first param is output parameter for {}",
+            func.name,
+            handle_type.unwrap()
+        );
+        return None;
+    }
+
     // Determine if this is a method or a free function
     let is_method = handle_type.is_some()
         && func
@@ -65,10 +102,23 @@ fn generate_method(func: &FfiFunction, handle_type: &str, code: &mut String) {
     writeln!(code, "        unsafe {{").unwrap();
 
     // Generate function call
+    // Check if we need to pass a reference to the handle
+    // If the first parameter expects a pointer to the handle type (e.g., *const HandleType),
+    // we need to pass &self.handle instead of self.handle
+    let first_param = func.params.first().unwrap();
+    let needs_reference =
+        first_param.ty.starts_with("*const ") || first_param.ty.starts_with("* const ");
+
+    let handle_arg = if needs_reference {
+        "&self.handle"
+    } else {
+        "self.handle"
+    };
+
     write!(
         code,
-        "            let result = ffi::{}(self.handle",
-        func.name
+        "            let result = ffi::{}({}",
+        func.name, handle_arg
     )
     .unwrap();
     for param in &params {
