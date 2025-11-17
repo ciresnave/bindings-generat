@@ -28,8 +28,14 @@ pub fn generate_code(
 
     let mut lib_rs = String::new();
 
-    // Generate header
+    // Generate header (includes FFI module declaration)
     generate_header(&mut lib_rs, lib_name);
+
+    // Collect all FFI types used in generated code
+    let ffi_types = collect_ffi_types(ffi_info, analysis);
+
+    // Generate imports for FFI types
+    generate_ffi_imports(&mut lib_rs, &ffi_types);
 
     // Always generate error enum (even if no error pattern detected)
     if let Some(error_enum) = analysis.error_patterns.error_enums.first() {
@@ -107,6 +113,109 @@ fn generate_header(code: &mut String, lib_name: &str) {
     .unwrap();
     writeln!(code, "#[path = \"ffi.rs\"]").unwrap();
     writeln!(code, "mod ffi;").unwrap();
+    writeln!(code).unwrap();
+}
+
+/// Collect all FFI types used in generated wrapper code
+fn collect_ffi_types(
+    ffi_info: &FfiInfo,
+    analysis: &AnalysisResult,
+) -> std::collections::HashSet<String> {
+    use std::collections::HashSet;
+
+    let mut types = HashSet::new();
+
+    // Collect types from functions that operate on handles
+    for handle in &analysis.raii_patterns.handle_types {
+        let handle_functions: Vec<_> = ffi_info
+            .functions
+            .iter()
+            .filter(|f| f.params.iter().any(|p| p.ty.contains(&handle.name)))
+            .collect();
+
+        for func in handle_functions {
+            // Add return type if it's an FFI type
+            if !func.return_type.is_empty()
+                && func.return_type != "()"
+                && func.return_type != "c_void"
+                && !is_rust_primitive(&func.return_type)
+            {
+                types.insert(func.return_type.clone());
+            }
+
+            // Add parameter types
+            for param in &func.params {
+                // Extract base type from pointers
+                let base_type = param
+                    .ty
+                    .replace("*const ", "")
+                    .replace("*mut ", "")
+                    .replace("* const ", "")
+                    .replace("* mut ", "")
+                    .trim()
+                    .to_string();
+
+                if !base_type.is_empty()
+                    && !is_rust_primitive(&base_type)
+                    && !base_type.contains("::")
+                {
+                    types.insert(base_type);
+                }
+            }
+        }
+    }
+
+    types
+}
+
+/// Check if a type is a Rust primitive
+fn is_rust_primitive(ty: &str) -> bool {
+    matches!(
+        ty,
+        "i8" | "i16"
+            | "i32"
+            | "i64"
+            | "i128"
+            | "isize"
+            | "u8"
+            | "u16"
+            | "u32"
+            | "u64"
+            | "u128"
+            | "usize"
+            | "f32"
+            | "f64"
+            | "bool"
+            | "char"
+            | "()"
+            | "c_void"
+            | "c_char"
+            | "c_int"
+            | "c_uint"
+            | "c_long"
+            | "c_ulong"
+            | "c_short"
+            | "c_ushort"
+            | "c_longlong"
+            | "c_ulonglong"
+            | "c_float"
+            | "c_double"
+    )
+}
+
+/// Generate use statements for FFI types
+fn generate_ffi_imports(code: &mut String, types: &std::collections::HashSet<String>) {
+    if types.is_empty() {
+        return;
+    }
+
+    writeln!(code, "// Import FFI types used in wrapper code").unwrap();
+    let mut sorted_types: Vec<_> = types.iter().collect();
+    sorted_types.sort();
+
+    for ty in sorted_types {
+        writeln!(code, "use crate::ffi::{};", ty).unwrap();
+    }
     writeln!(code).unwrap();
 }
 

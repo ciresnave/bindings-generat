@@ -24,7 +24,7 @@ pub fn generate_raii_wrapper(
     // Generate the struct
     writeln!(code, "/// Safe wrapper for `{}`", handle.name).unwrap();
     writeln!(code, "pub struct {} {{", type_name).unwrap();
-    writeln!(code, "    handle: *mut {},", handle.name).unwrap();
+    writeln!(code, "    handle: {},", handle.name).unwrap();
     writeln!(code, "}}").unwrap();
     writeln!(code).unwrap();
 
@@ -98,7 +98,7 @@ pub fn generate_basic_wrapper(handle: &HandleType) -> RaiiWrapper {
     )
     .unwrap();
     writeln!(code, "pub struct {} {{", type_name).unwrap();
-    writeln!(code, "    pub handle: *mut {},", handle.name).unwrap();
+    writeln!(code, "    pub handle: {},", handle.name).unwrap();
     writeln!(code, "}}").unwrap();
     writeln!(code).unwrap();
 
