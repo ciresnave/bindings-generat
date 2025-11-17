@@ -154,7 +154,8 @@ fn parse_foreign_function(func: ForeignItemFn) -> Option<FfiFunction> {
                 && let syn::Pat::Ident(pat_ident) = &*pat_type.pat
             {
                 let param_name = pat_ident.ident.to_string();
-                let type_str = quote::quote!(#pat_type.ty).to_string();
+                let ty = &pat_type.ty;
+                let type_str = quote::quote!(#ty).to_string();
 
                 let (is_pointer, is_mut) = analyze_pointer_type(&pat_type.ty);
 

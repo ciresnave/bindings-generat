@@ -80,7 +80,7 @@ pub fn generate_raii_wrapper(
 }
 
 /// Convert C type name to idiomatic Rust type name
-fn to_rust_type_name(c_name: &str) -> String {
+pub fn to_rust_type_name(c_name: &str) -> String {
     let mut name = c_name.replace("_t", "").replace("_", " ");
 
     // Convert to PascalCase
