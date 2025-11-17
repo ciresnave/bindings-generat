@@ -14,12 +14,13 @@ use tracing::info;
 pub fn output_generated_code(
     output_dir: &Path,
     lib_rs_content: &str,
+    ffi_bindings: &str,
     lib_name: &str,
 ) -> Result<()> {
     info!("Starting output pipeline");
 
     // Step 1: Write files
-    writer::write_generated_code(output_dir, lib_rs_content, lib_name)?;
+    writer::write_generated_code(output_dir, lib_rs_content, ffi_bindings, lib_name)?;
 
     // Step 2: Format code (optional, continues on failure)
     if formatter::is_rustfmt_available() {
