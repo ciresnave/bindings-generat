@@ -13,6 +13,7 @@ jobs:
   test:
     name: Test
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -50,7 +51,8 @@ jobs:
           sudo apt-get install -y libclang-dev llvm-dev
       
       - name: Run tests
-        run: cargo test --verbose
+        timeout-minutes: 10
+        run: cargo test --verbose -- --test-threads=2
 
   clippy:
     name: Clippy

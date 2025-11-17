@@ -68,7 +68,7 @@ fn test_cli_missing_output() {
     }
 
     let mut cmd = get_cmd();
-    cmd.arg(&fixture_path);
+    cmd.arg(&fixture_path).arg("--no-llm");
 
     // With new default output, this should now succeed
     cmd.assert().success();
@@ -193,7 +193,8 @@ fn test_cli_non_interactive_flag() {
     cmd.arg(&fixture_path)
         .arg("--output")
         .arg(&output_path)
-        .arg("--non-interactive");
+        .arg("--non-interactive")
+        .arg("--no-llm");
 
     cmd.assert().success();
 }
