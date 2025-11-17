@@ -1,4 +1,5 @@
 use crate::ffi::FfiFunction;
+use crate::utils::doc_sanitizer::sanitize_doc;
 use std::fmt::Write;
 use tracing::debug;
 
@@ -35,7 +36,10 @@ fn generate_method(func: &FfiFunction, handle_type: &str, code: &mut String) {
 
     // Generate method signature
     if let Some(docs) = &func.docs {
-        writeln!(code, "    /// {}", docs).unwrap();
+        let sanitized = sanitize_doc(docs);
+        for line in sanitized.lines() {
+            writeln!(code, "    /// {}", line).unwrap();
+        }
     }
     writeln!(code, "    pub fn {}(", method_name).unwrap();
     writeln!(code, "        &mut self,").unwrap();
@@ -93,7 +97,10 @@ fn generate_free_function(func: &FfiFunction, code: &mut String) {
 
     // Generate function signature
     if let Some(docs) = &func.docs {
-        writeln!(code, "/// {}", docs).unwrap();
+        let sanitized = sanitize_doc(docs);
+        for line in sanitized.lines() {
+            writeln!(code, "/// {}", line).unwrap();
+        }
     }
     writeln!(code, "pub fn {}(", func_name).unwrap();
 

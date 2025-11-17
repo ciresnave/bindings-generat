@@ -1,4 +1,5 @@
 use crate::analyzer::errors::ErrorEnum;
+use crate::utils::doc_sanitizer::sanitize_doc;
 use std::fmt::Write;
 use tracing::{debug, info};
 
@@ -27,7 +28,10 @@ pub fn generate_error_enum(
         let doc_comment = enhancements
             .and_then(|e| e.get_error_message(variant))
             .unwrap_or(variant);
-        writeln!(code, "    /// {}", doc_comment).unwrap();
+        let sanitized = sanitize_doc(doc_comment);
+        for line in sanitized.lines() {
+            writeln!(code, "    /// {}", line).unwrap();
+        }
         writeln!(code, "    {},", rust_variant).unwrap();
     }
 
