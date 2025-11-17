@@ -24,3 +24,10 @@ Thumbs.db
 # Code coverage files
 *.profraw
 *.profdata
+
+# Development history (internal docs)
+SETUP_COMPLETE.md
+IMPLEMENTATION_COMPLETE.md
+TEST_IMPROVEMENTS.md
+TEST_SUMMARY.md
+PRE_PUBLICATION_AUDIT.md
