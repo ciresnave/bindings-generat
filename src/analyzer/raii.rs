@@ -111,12 +111,93 @@ fn identify_handle_types(ffi_info: &FfiInfo) -> Vec<HandleType> {
     }
 
     // Types used frequently as pointers are likely handles
+    // But filter out primitive types, standard library types, and non-handle types
+    let primitive_types = [
+        "i8",
+        "i16",
+        "i32",
+        "i64",
+        "i128",
+        "isize",
+        "u8",
+        "u16",
+        "u32",
+        "u64",
+        "u128",
+        "usize",
+        "f32",
+        "f64",
+        "bool",
+        "char",
+        "c_void",
+        "c_char",
+        "c_int",
+        "c_uint",
+        "c_long",
+        "c_ulong",
+        "c_short",
+        "c_ushort",
+        "c_longlong",
+        "c_ulonglong",
+        "c_float",
+        "c_double",
+    ];
+
+    // Common handle-like keywords in type names
+    let handle_keywords = [
+        "handle",
+        "descriptor",
+        "context",
+        "stream",
+        "event",
+        "pool",
+        "graph",
+        "node",
+        "texture",
+        "surface",
+        "array",
+        "memory",
+        "mem",
+        "buffer",
+        "queue",
+        "device",
+        "resource",
+        "object",
+        "instance",
+        "session",
+        "connection",
+        "socket",
+    ];
+
     for (type_name, count) in pointer_types {
-        if count >= 2
-            && !type_name.is_empty()
-            && type_name != "c_void"
-            && !handles.iter().any(|h| h.name == type_name)
-        {
+        // Skip if the type is empty or a known primitive
+        if type_name.is_empty() || primitive_types.contains(&type_name.as_str()) {
+            continue;
+        }
+        
+        // Skip if the type contains :: (it's already a Rust path, not a C type)
+        if type_name.contains("::") {
+            debug!("Skipping Rust path type: {}", type_name);
+            continue;
+        }
+        
+        // For types ending in _t, only consider them if they have handle-like keywords
+        if type_name.ends_with("_t") {
+            let lower_name = type_name.to_lowercase();
+            let is_handle = handle_keywords.iter().any(|keyword| lower_name.contains(keyword));
+            if !is_handle {
+                debug!("Skipping non-handle type ending in _t: {}", type_name);
+                continue;
+            }
+        }
+        
+        // Skip if already added
+        if handles.iter().any(|h| h.name == type_name) {
+            continue;
+        }
+        
+        // Must be used at least twice as a pointer
+        if count >= 2 {
             debug!(
                 "Identified potential handle type: {} (used {} times)",
                 type_name, count

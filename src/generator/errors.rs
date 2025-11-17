@@ -3,6 +3,76 @@ use crate::utils::doc_sanitizer::sanitize_doc;
 use std::fmt::Write;
 use tracing::{debug, info};
 
+/// Generate a basic error enum when no FFI error enum is detected
+pub fn generate_basic_error() -> String {
+    info!("Generating basic error type (no error enum detected)");
+
+    let mut code = String::new();
+
+    writeln!(code, "/// Error type for this library").unwrap();
+    writeln!(code, "#[derive(Debug, Clone, Copy, PartialEq, Eq)]").unwrap();
+    writeln!(code, "pub enum Error {{").unwrap();
+    writeln!(code, "    /// Null pointer returned").unwrap();
+    writeln!(code, "    NullPointer,").unwrap();
+    writeln!(code, "    /// FFI function returned an error status").unwrap();
+    writeln!(code, "    FfiError(i32),").unwrap();
+    writeln!(code, "    /// Unknown error").unwrap();
+    writeln!(code, "    Unknown,").unwrap();
+    writeln!(code, "}}").unwrap();
+    writeln!(code).unwrap();
+
+    // Generate From<i32> implementation
+    writeln!(code, "impl From<i32> for Error {{").unwrap();
+    writeln!(code, "    fn from(code: i32) -> Self {{").unwrap();
+    writeln!(code, "        if code == 0 {{").unwrap();
+    writeln!(
+        code,
+        "            // Success code should not become an error"
+    )
+    .unwrap();
+    writeln!(code, "            Error::Unknown").unwrap();
+    writeln!(code, "        }} else {{").unwrap();
+    writeln!(code, "            Error::FfiError(code)").unwrap();
+    writeln!(code, "        }}").unwrap();
+    writeln!(code, "    }}").unwrap();
+    writeln!(code, "}}").unwrap();
+    writeln!(code).unwrap();
+
+    // Generate Display implementation
+    writeln!(code, "impl std::fmt::Display for Error {{").unwrap();
+    writeln!(
+        code,
+        "    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{"
+    )
+    .unwrap();
+    writeln!(code, "        match self {{").unwrap();
+    writeln!(
+        code,
+        "            Error::NullPointer => write!(f, \"Null pointer returned\"),"
+    )
+    .unwrap();
+    writeln!(
+        code,
+        "            Error::FfiError(code) => write!(f, \"FFI error: {{}}\", code),"
+    )
+    .unwrap();
+    writeln!(
+        code,
+        "            Error::Unknown => write!(f, \"Unknown error\"),"
+    )
+    .unwrap();
+    writeln!(code, "        }}").unwrap();
+    writeln!(code, "    }}").unwrap();
+    writeln!(code, "}}").unwrap();
+    writeln!(code).unwrap();
+
+    // Generate std::error::Error implementation
+    writeln!(code, "impl std::error::Error for Error {{}}").unwrap();
+    writeln!(code).unwrap();
+
+    code
+}
+
 /// Generate Rust error enum from FFI error enum
 pub fn generate_error_enum(
     error_enum: &ErrorEnum,

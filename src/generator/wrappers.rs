@@ -79,6 +79,41 @@ pub fn generate_raii_wrapper(
     }
 }
 
+/// Generate a basic wrapper type for a handle without lifecycle functions
+/// This creates a struct without create() or Drop implementation
+pub fn generate_basic_wrapper(handle: &HandleType) -> RaiiWrapper {
+    debug!(
+        "Generating basic wrapper for {} (no lifecycle)",
+        handle.name
+    );
+
+    let type_name = to_rust_type_name(&handle.name);
+    let mut code = String::new();
+
+    // Generate the struct
+    writeln!(code, "/// Wrapper for `{}`", handle.name).unwrap();
+    writeln!(
+        code,
+        "/// Note: No automatic resource management - handle cleanup manually"
+    )
+    .unwrap();
+    writeln!(code, "pub struct {} {{", type_name).unwrap();
+    writeln!(code, "    pub handle: *mut {},", handle.name).unwrap();
+    writeln!(code, "}}").unwrap();
+    writeln!(code).unwrap();
+
+    info!(
+        "Generated basic wrapper for {} -> {}",
+        handle.name, type_name
+    );
+
+    RaiiWrapper {
+        type_name,
+        handle_type: handle.name.clone(),
+        code,
+    }
+}
+
 /// Convert C type name to idiomatic Rust type name
 pub fn to_rust_type_name(c_name: &str) -> String {
     let mut name = c_name.replace("_t", "").replace("_", " ");
