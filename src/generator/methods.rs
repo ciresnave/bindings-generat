@@ -101,6 +101,19 @@ fn generate_method(func: &FfiFunction, handle_type: &str, code: &mut String) {
     writeln!(code, "    ) -> {} {{", return_type).unwrap();
     writeln!(code, "        unsafe {{").unwrap();
 
+    // Convert string parameters to CString
+    for param in &params {
+        if is_c_string_type(&param.ty) {
+            let param_name = to_param_name(&param.name);
+            writeln!(
+                code,
+                "            let {}_cstr = std::ffi::CString::new({}).map_err(|_| Error::NullPointer)?;",
+                param_name, param_name
+            )
+            .unwrap();
+        }
+    }
+
     // Generate function call
     // Check if we need to pass a reference to the handle
     // If the first parameter expects a pointer to the handle type (e.g., *const HandleType),
@@ -122,7 +135,12 @@ fn generate_method(func: &FfiFunction, handle_type: &str, code: &mut String) {
     )
     .unwrap();
     for param in &params {
-        write!(code, ", {}", to_param_name(&param.name)).unwrap();
+        let param_name = to_param_name(&param.name);
+        if is_c_string_type(&param.ty) {
+            write!(code, ", {}_cstr.as_ptr()", param_name).unwrap();
+        } else {
+            write!(code, ", {}", param_name).unwrap();
+        }
     }
     writeln!(code, ");").unwrap();
 
@@ -175,13 +193,31 @@ fn generate_free_function(func: &FfiFunction, code: &mut String) {
     writeln!(code, ") -> {} {{", return_type).unwrap();
     writeln!(code, "    unsafe {{").unwrap();
 
+    // Convert string parameters to CString
+    for param in &func.params {
+        if is_c_string_type(&param.ty) {
+            let param_name = to_param_name(&param.name);
+            writeln!(
+                code,
+                "        let {}_cstr = std::ffi::CString::new({}).unwrap();",
+                param_name, param_name
+            )
+            .unwrap();
+        }
+    }
+
     // Generate function call
     write!(code, "        ffi::{}(", func.name).unwrap();
     for (i, param) in func.params.iter().enumerate() {
         if i > 0 {
             write!(code, ", ").unwrap();
         }
-        write!(code, "{}", to_param_name(&param.name)).unwrap();
+        let param_name = to_param_name(&param.name);
+        if is_c_string_type(&param.ty) {
+            write!(code, "{}_cstr.as_ptr()", param_name).unwrap();
+        } else {
+            write!(code, "{}", param_name).unwrap();
+        }
     }
     writeln!(code, ")").unwrap();
 
@@ -222,6 +258,11 @@ fn to_param_name(param_name: &str) -> String {
     }
 
     name
+}
+
+fn is_c_string_type(ffi_type: &str) -> bool {
+    // Check if this is a C string type (*const c_char)
+    ffi_type.contains("*") && ffi_type.contains("const") && ffi_type.contains("c_char")
 }
 
 fn to_safe_type(ffi_type: &str) -> String {
