@@ -1,18 +1,23 @@
 use anyhow::{Context, Result};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use syn::{File, ForeignItem, ForeignItemFn, Item, ItemEnum, ItemStruct, ItemType};
 use tracing::{debug, info};
 
 /// Parsed FFI information
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiInfo {
     pub functions: Vec<FfiFunction>,
     pub types: Vec<FfiType>,
     pub enums: Vec<FfiEnum>,
     pub constants: Vec<FfiConstant>,
     pub opaque_types: Vec<String>,
+    pub dependencies: Vec<String>,
+    /// Type aliases (e.g., "cudnnHandle_t" -> "*mut cudnnContext")
+    pub type_aliases: HashMap<String, String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiFunction {
     pub name: String,
     pub params: Vec<FfiParam>,
@@ -20,7 +25,7 @@ pub struct FfiFunction {
     pub docs: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiParam {
     pub name: String,
     pub ty: String,
@@ -28,7 +33,7 @@ pub struct FfiParam {
     pub is_mut: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiType {
     pub name: String,
     pub is_opaque: bool,
@@ -36,26 +41,27 @@ pub struct FfiType {
     pub fields: Vec<FfiField>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiField {
     pub name: String,
     pub ty: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiEnum {
     pub name: String,
     pub variants: Vec<FfiEnumVariant>,
     pub docs: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiEnumVariant {
     pub name: String,
     pub value: Option<i64>,
+    pub docs: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FfiConstant {
     pub name: String,
     pub value: String,
@@ -76,6 +82,8 @@ impl FfiInfo {
             enums: Vec::new(),
             constants: Vec::new(),
             opaque_types: Vec::new(),
+            dependencies: Vec::new(),
+            type_aliases: HashMap::new(),
         }
     }
 }
@@ -115,9 +123,16 @@ pub fn parse_ffi_bindings(bindings_code: &str) -> Result<FfiInfo> {
                 }
             }
             Item::Type(item_type) => {
-                // Check if this is an opaque type
+                // Store the type alias mapping
+                let alias_name = item_type.ident.to_string();
+                let target_type = quote::quote!(#item_type.ty).to_string();
+                ffi_info
+                    .type_aliases
+                    .insert(alias_name.clone(), target_type);
+
+                // Also check if this is an opaque type
                 if is_opaque_type(&item_type) {
-                    ffi_info.opaque_types.push(item_type.ident.to_string());
+                    ffi_info.opaque_types.push(alias_name);
                 }
             }
             Item::Const(item_const) => {
@@ -139,7 +154,64 @@ pub fn parse_ffi_bindings(bindings_code: &str) -> Result<FfiInfo> {
         ffi_info.constants.len()
     );
 
+    // Detect external library dependencies by analyzing function name prefixes
+    ffi_info.dependencies = detect_dependencies(&ffi_info.functions);
+    if !ffi_info.dependencies.is_empty() {
+        info!("Detected dependencies: {:?}", ffi_info.dependencies);
+    }
+
     Ok(ffi_info)
+}
+
+/// Detect external library dependencies by analyzing function name prefixes
+fn detect_dependencies(functions: &[FfiFunction]) -> Vec<String> {
+    use std::collections::HashMap;
+
+    // Known library prefixes and their corresponding library names
+    let known_prefixes: HashMap<&str, &str> = [
+        ("cuda", "cuda"),         // CUDA Runtime
+        ("cublas", "cublas"),     // cuBLAS
+        ("cufft", "cufft"),       // cuFFT
+        ("curand", "curand"),     // cuRAND
+        ("cusparse", "cusparse"), // cuSPARSE
+        ("cusolver", "cusolver"), // cuSOLVER
+        ("nvjpeg", "nvjpeg"),     // nvJPEG
+        ("npp", "npp"),           // NPP (NVIDIA Performance Primitives)
+    ]
+    .iter()
+    .copied()
+    .collect();
+
+    // Count functions per prefix
+    let mut prefix_counts: HashMap<String, usize> = HashMap::new();
+
+    for func in functions {
+        let func_name = func.name.to_lowercase();
+
+        // Check each known prefix
+        for prefix in known_prefixes.keys() {
+            if func_name.starts_with(prefix) {
+                *prefix_counts.entry(prefix.to_string()).or_insert(0) += 1;
+                break; // Only count once per function
+            }
+        }
+    }
+
+    // Only include dependencies with significant usage (>= 5 functions)
+    // This avoids false positives from coincidental naming
+    let mut dependencies: Vec<String> = prefix_counts
+        .iter()
+        .filter(|(_, count)| **count >= 5)
+        .map(|(prefix, count)| {
+            let lib_name = known_prefixes.get(prefix.as_str()).unwrap();
+            debug!("Detected dependency '{}' ({} functions)", lib_name, count);
+            lib_name.to_string()
+        })
+        .collect();
+
+    dependencies.sort();
+    dependencies.dedup();
+    dependencies
 }
 
 fn parse_foreign_function(func: ForeignItemFn) -> Option<FfiFunction> {
@@ -221,6 +293,7 @@ fn parse_enum(item_enum: ItemEnum) -> Option<FfiEnum> {
         .iter()
         .map(|variant| {
             let variant_name = variant.ident.to_string();
+            let variant_docs = extract_docs(&variant.attrs);
             let value = match &variant.discriminant {
                 Some((_, expr)) => {
                     // Try to extract integer value
@@ -240,6 +313,7 @@ fn parse_enum(item_enum: ItemEnum) -> Option<FfiEnum> {
             FfiEnumVariant {
                 name: variant_name,
                 value,
+                docs: variant_docs,
             }
         })
         .collect();

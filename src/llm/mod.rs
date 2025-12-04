@@ -1,6 +1,7 @@
 pub mod cache;
 pub mod client;
 pub mod docs;
+pub mod enhanced_context;
 pub mod enhancements;
 pub mod installer;
 pub mod models;
@@ -9,6 +10,7 @@ pub mod prompts;
 
 pub use client::{OllamaClient, is_ollama_available};
 pub use docs::DocsEnhancer;
+pub use enhanced_context::EnhancedContext;
 pub use enhancements::CodeEnhancements;
 pub use installer::{OllamaInstallType, OllamaInstaller};
 pub use models::{LlmModel, select_model};

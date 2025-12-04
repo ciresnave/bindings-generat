@@ -1,0 +1,20 @@
+[package]
+    edition = "2021"
+    name    = "library_inspector"
+    version = "0.1.0"
+
+[dependencies]
+    anyhow            = "1.0"
+    ar                = "0.9"
+    c_header_analyzer = { path = "../c_header_analyzer" }
+    clap              = { version = "4.1", features = ["derive"] }
+    cpp_demangle      = "0.5"
+    goblin            = "0.10"
+    hex               = "0.4"
+    library_db        = { path = "../library_db" }
+    object            = "0.38"
+    reqwest           = { version = "0.12", features = ["blocking", "rustls-tls"] }
+    serde             = { version = "1.0", features = ["derive"] }
+    serde_json        = "1.0"
+    sha2              = "0.10"
+    undname           = "2"

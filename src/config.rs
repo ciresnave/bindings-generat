@@ -3,8 +3,11 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 /// Configuration for the bindings generator
+///
+/// This is the configuration for a specific binding generation run,
+/// as opposed to the user's persistent preferences (which are in config/mod.rs).
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Config {
+pub struct GeneratorConfig {
     /// Source identifier (path, URL, or archive)
     pub source: String,
 
@@ -16,6 +19,15 @@ pub struct Config {
 
     /// Specific header files to process
     pub headers: Vec<PathBuf>,
+
+    /// Additional include directories for dependencies
+    pub include_dirs: Vec<PathBuf>,
+
+    /// Link libraries for dependencies
+    pub link_libs: Vec<String>,
+
+    /// Link library search paths
+    pub lib_paths: Vec<PathBuf>,
 
     /// Whether to use LLM enhancement
     pub use_llm: bool,
@@ -37,10 +49,30 @@ pub struct Config {
 
     /// Verbose logging
     pub verbose: bool,
+
+    /// Whether to bundle the library into the generated crate (opt-in; obeys license)
+    #[serde(default)]
+    pub bundle_library: bool,
+
+    /// Whether to enable build-time discovery/download (deprecated; opt-in)
+    #[serde(default)]
+    pub enable_build_discovery: bool,
+
+    /// Bindgen timeout in seconds (default: 300 = 5 minutes)
+    ///
+    /// If bindgen takes longer than this, it will be terminated.
+    /// Increase for extremely large header files (10k+ functions).
+    #[serde(default = "default_bindgen_timeout")]
+    pub bindgen_timeout_secs: u64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+fn default_bindgen_timeout() -> u64 {
+    300 // 5 minutes
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
 pub enum CodeStyle {
+    #[default]
     /// Minimal wrappers, close to raw FFI
     Minimal,
     /// Ergonomic Rust API with builders and conveniences
@@ -65,7 +97,7 @@ impl std::str::FromStr for CodeStyle {
     }
 }
 
-impl Config {
+impl GeneratorConfig {
     /// Create a new configuration from CLI arguments
     pub fn from_cli(cli: &crate::cli::Cli) -> Result<Self> {
         let cache_dir = cli.cache_dir.clone().unwrap_or_else(|| {
@@ -81,6 +113,9 @@ impl Config {
             output_path: cli.get_output_dir(),
             lib_name: cli.lib_name.clone(),
             headers: Vec::new(), // Will be populated during discovery
+            include_dirs: cli.include_dirs.clone(),
+            link_libs: cli.link_libs.clone(),
+            lib_paths: cli.lib_paths.clone(),
             use_llm: !cli.no_llm,
             llm_model: cli.model.clone(),
             interactive: cli.interactive || (!cli.non_interactive),
@@ -88,6 +123,9 @@ impl Config {
             cache_dir,
             dry_run: cli.dry_run,
             verbose: cli.verbose,
+            bundle_library: cli.bundle_library,
+            enable_build_discovery: cli.enable_build_discovery,
+            bindgen_timeout_secs: default_bindgen_timeout(),
         })
     }
 
@@ -103,6 +141,30 @@ impl Config {
         let content = toml::to_string_pretty(self).context("Failed to serialize config")?;
         std::fs::write(path, content).context("Failed to write config file")?;
         Ok(())
+    }
+}
+
+impl Default for GeneratorConfig {
+    fn default() -> Self {
+        Self {
+            source: String::new(),
+            output_path: PathBuf::from("bindings-output"),
+            lib_name: None,
+            headers: Vec::new(),
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            use_llm: false,
+            llm_model: "llama3.2".to_string(),
+            interactive: false,
+            style: CodeStyle::default(),
+            cache_dir: PathBuf::from(".cache"),
+            dry_run: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+            bindgen_timeout_secs: default_bindgen_timeout(),
+        }
     }
 }
 

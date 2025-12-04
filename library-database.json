@@ -1,0 +1,411 @@
+{
+    "version": "1.0.0",
+    "libraries": [
+        {
+            "name": "openssl",
+            "display_name": "OpenSSL",
+            "version": "3.x",
+            "description": "Cryptography and SSL/TLS toolkit",
+            "homepage": "https://www.openssl.org/",
+            "documentation": "https://docs.openssl.org/",
+            "license": "Apache-2.0",
+            "redistributable": true,
+            "platforms": {
+                "windows": {
+                    "symbols": [
+                        "SSL_library_init",
+                        "SSL_CTX_new",
+                        "SSL_connect"
+                    ],
+                    "filenames": [
+                        "libssl-3-x64.dll",
+                        "libcrypto-3-x64.dll",
+                        "libssl.lib",
+                        "libcrypto.lib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "direct_download",
+                            "url": "https://slproweb.com/products/Win32OpenSSL.html",
+                            "requires_account": false,
+                            "notes": "Third-party Windows builds by Shining Light Productions",
+                            "file_format": "exe",
+                            "install_instructions": [
+                                "Download Win64 OpenSSL v3.x installer",
+                                "Run installer and follow prompts",
+                                "Add installation bin directory to PATH if needed"
+                            ]
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "chocolatey",
+                            "package": "openssl",
+                            "command": "choco install openssl",
+                            "notes": "Community-maintained package"
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "vcpkg",
+                            "package": "openssl",
+                            "command": "vcpkg install openssl:x64-windows",
+                            "notes": "Builds from source, may take time"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "C:\\Program Files\\OpenSSL-Win64\\",
+                        "C:\\OpenSSL-Win64\\",
+                        "%OPENSSL_DIR%"
+                    ]
+                },
+                "linux": {
+                    "symbols": [
+                        "SSL_library_init",
+                        "SSL_CTX_new",
+                        "SSL_connect"
+                    ],
+                    "filenames": [
+                        "libssl.so.3",
+                        "libcrypto.so.3",
+                        "libssl.so",
+                        "libcrypto.so"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "apt",
+                            "package": "libssl-dev",
+                            "command": "sudo apt install libssl-dev",
+                            "notes": "Debian/Ubuntu systems"
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "yum",
+                            "package": "openssl-devel",
+                            "command": "sudo yum install openssl-devel",
+                            "notes": "RHEL/CentOS/Fedora systems"
+                        },
+                        {
+                            "type": "source_build",
+                            "url": "https://www.openssl.org/source/",
+                            "file_format": "tar.gz",
+                            "build_instructions": [
+                                "./config",
+                                "make",
+                                "sudo make install"
+                            ]
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/lib/x86_64-linux-gnu/",
+                        "/usr/lib64/",
+                        "/usr/local/lib/"
+                    ]
+                },
+                "macos": {
+                    "symbols": [
+                        "SSL_library_init",
+                        "SSL_CTX_new",
+                        "SSL_connect"
+                    ],
+                    "filenames": [
+                        "libssl.3.dylib",
+                        "libcrypto.3.dylib",
+                        "libssl.dylib",
+                        "libcrypto.dylib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "brew",
+                            "package": "openssl@3",
+                            "command": "brew install openssl@3",
+                            "notes": "Homebrew package manager"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/local/opt/openssl@3/lib/",
+                        "/opt/homebrew/opt/openssl@3/lib/",
+                        "/usr/local/lib/"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "libpng",
+            "display_name": "libpng",
+            "version": "1.6.x",
+            "description": "PNG reference library for reading and writing PNG images",
+            "homepage": "http://www.libpng.org/pub/png/libpng.html",
+            "documentation": "http://www.libpng.org/pub/png/libpng-manual.txt",
+            "license": "PNG License",
+            "redistributable": true,
+            "platforms": {
+                "windows": {
+                    "symbols": [
+                        "png_create_read_struct",
+                        "png_init_io",
+                        "png_read_png"
+                    ],
+                    "filenames": [
+                        "libpng16.lib",
+                        "libpng16.dll",
+                        "libpng.lib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "direct_download",
+                            "url": "http://gnuwin32.sourceforge.net/packages/libpng.htm",
+                            "notes": "GnuWin32 pre-compiled binaries",
+                            "file_format": "zip"
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "vcpkg",
+                            "package": "libpng",
+                            "command": "vcpkg install libpng:x64-windows"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "C:\\Program Files\\GnuWin32\\",
+                        "%VCPKG_ROOT%\\installed\\x64-windows\\"
+                    ]
+                },
+                "linux": {
+                    "symbols": [
+                        "png_create_read_struct",
+                        "png_init_io"
+                    ],
+                    "filenames": [
+                        "libpng16.so",
+                        "libpng.so"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "apt",
+                            "package": "libpng-dev",
+                            "command": "sudo apt install libpng-dev"
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "yum",
+                            "package": "libpng-devel",
+                            "command": "sudo yum install libpng-devel"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/lib/x86_64-linux-gnu/",
+                        "/usr/lib64/"
+                    ]
+                },
+                "macos": {
+                    "symbols": [
+                        "png_create_read_struct",
+                        "png_init_io"
+                    ],
+                    "filenames": [
+                        "libpng16.dylib",
+                        "libpng.dylib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "brew",
+                            "package": "libpng",
+                            "command": "brew install libpng"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/local/lib/",
+                        "/opt/homebrew/lib/"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "zlib",
+            "display_name": "zlib",
+            "version": "1.x",
+            "description": "General-purpose compression library",
+            "homepage": "https://zlib.net/",
+            "documentation": "https://zlib.net/manual.html",
+            "license": "Zlib",
+            "redistributable": true,
+            "platforms": {
+                "windows": {
+                    "symbols": [
+                        "deflate",
+                        "inflate",
+                        "compress",
+                        "uncompress"
+                    ],
+                    "filenames": [
+                        "zlib.lib",
+                        "zlib.dll",
+                        "zlibstatic.lib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "vcpkg",
+                            "package": "zlib",
+                            "command": "vcpkg install zlib:x64-windows"
+                        },
+                        {
+                            "type": "direct_download",
+                            "url": "http://gnuwin32.sourceforge.net/packages/zlib.htm",
+                            "notes": "GnuWin32 pre-compiled binaries",
+                            "file_format": "zip"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "%VCPKG_ROOT%\\installed\\x64-windows\\",
+                        "C:\\Program Files\\zlib\\"
+                    ]
+                },
+                "linux": {
+                    "symbols": [
+                        "deflate",
+                        "inflate"
+                    ],
+                    "filenames": [
+                        "libz.so",
+                        "libz.so.1"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "apt",
+                            "package": "zlib1g-dev",
+                            "command": "sudo apt install zlib1g-dev"
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "yum",
+                            "package": "zlib-devel",
+                            "command": "sudo yum install zlib-devel"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/lib/x86_64-linux-gnu/",
+                        "/usr/lib64/"
+                    ]
+                },
+                "macos": {
+                    "symbols": [
+                        "deflate",
+                        "inflate"
+                    ],
+                    "filenames": [
+                        "libz.dylib",
+                        "libz.1.dylib"
+                    ],
+                    "sources": [
+                        {
+                            "type": "package_manager",
+                            "manager": "brew",
+                            "package": "zlib",
+                            "command": "brew install zlib",
+                            "notes": "Usually pre-installed on macOS"
+                        }
+                    ],
+                    "install_path_hints": [
+                        "/usr/lib/",
+                        "/usr/local/lib/"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "cudnn64_9",
+            "display_name": "NVIDIA cuDNN",
+            "version": "9.x",
+            "description": "Deep Neural Network library for GPU-accelerated neural networks",
+            "homepage": "https://developer.nvidia.com/cudnn",
+            "documentation": "https://docs.nvidia.com/deeplearning/cudnn/",
+            "license": "NVIDIA Software License Agreement",
+            "redistributable": false,
+            "platforms": {
+                "windows": {
+                    "symbols": [
+                        "cudnnCreate",
+                        "cudnnSetStream",
+                        "cudnnDestroy"
+                    ],
+                    "filenames": [
+                        "cudnn64_9.lib",
+                        "cudnn64_9.dll"
+                    ],
+                    "sources": [
+                        {
+                            "type": "direct_download",
+                            "url": "https://developer.nvidia.com/cudnn-downloads",
+                            "requires_account": true,
+                            "notes": "Requires NVIDIA Developer account. Must accept license agreement.",
+                            "file_format": "zip",
+                            "install_instructions": [
+                                "Download cuDNN for Windows",
+                                "Extract ZIP archive",
+                                "Copy contents to CUDA installation directory or separate location",
+                                "Add bin directory to PATH",
+                                "Set CUDNN_PATH environment variable (optional)"
+                            ]
+                        }
+                    ],
+                    "dependencies": [
+                        "cuda"
+                    ],
+                    "minimum_version": "12.0",
+                    "install_path_hints": [
+                        "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v*\\",
+                        "C:\\Program Files\\NVIDIA\\CUDNN\\",
+                        "C:\\cudnn\\",
+                        "%CUDNN_PATH%",
+                        "%CUDA_PATH%"
+                    ]
+                },
+                "linux": {
+                    "symbols": [
+                        "cudnnCreate",
+                        "cudnnSetStream",
+                        "cudnnDestroy"
+                    ],
+                    "filenames": [
+                        "libcudnn.so.9",
+                        "libcudnn.so"
+                    ],
+                    "sources": [
+                        {
+                            "type": "direct_download",
+                            "url": "https://developer.nvidia.com/cudnn-downloads",
+                            "requires_account": true,
+                            "file_format": "tar.gz",
+                            "install_instructions": [
+                                "tar -xzvf cudnn-*.tar.gz",
+                                "sudo cp cuda/include/cudnn*.h /usr/local/cuda/include",
+                                "sudo cp cuda/lib/libcudnn* /usr/local/cuda/lib64",
+                                "sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*"
+                            ]
+                        },
+                        {
+                            "type": "package_manager",
+                            "manager": "apt",
+                            "package": "libcudnn9-dev",
+                            "command": "sudo apt install libcudnn9-dev",
+                            "repository": "NVIDIA CUDA repository (must be added first)",
+                            "notes": "Requires NVIDIA CUDA repository to be configured"
+                        }
+                    ],
+                    "dependencies": [
+                        "cuda-toolkit"
+                    ],
+                    "install_path_hints": [
+                        "/usr/lib/x86_64-linux-gnu/",
+                        "/usr/local/cuda/lib64/",
+                        "/opt/cuda/lib64/"
+                    ]
+                }
+            }
+        }
+    ]
+}

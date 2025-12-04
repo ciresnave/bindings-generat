@@ -25,6 +25,13 @@ Thumbs.db
 *.profraw
 *.profdata
 
+# Test output directories
+/bindings-output/
+/test-output/
+/test-*-output/
+/cudnn-generated/
+/cuda-test-final/
+
 # Development history (internal docs)
 SETUP_COMPLETE.md
 IMPLEMENTATION_COMPLETE.md

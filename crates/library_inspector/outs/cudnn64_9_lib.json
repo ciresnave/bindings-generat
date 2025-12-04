@@ -1,0 +1,131 @@
+{
+  "inspection": {
+    "arch": "X86_64",
+    "checksum": "5e86f8d3db4bab4b58686a43334e48e9a5a0c94f5881791a382b8e46d72ce176",
+    "exports": [
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          ".idata$2",
+          "_.idata$2"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "unknown",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": ".idata$2"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          ".idata$4",
+          "_.idata$4"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "unknown",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": ".idata$4"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          ".idata$5",
+          "_.idata$5"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "unknown",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": ".idata$5"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          ".idata$6",
+          "_.idata$6"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "data",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": ".idata$6"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "@comp.id",
+          "_@comp.id"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "data",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": "@comp.id"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "IMPORT_DESCRIPTOR_cudnn64_9",
+          "__IMPORT_DESCRIPTOR_cudnn64_9",
+          "IMPORT_DESCRIPTOR_cudnn64_9"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "data",
+        "normalized": "IMPORT_DESCRIPTOR_cudnn64_9",
+        "ordinal": null,
+        "raw_name": "__IMPORT_DESCRIPTOR_cudnn64_9"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "__NULL_IMPORT_DESCRIPTOR",
+          "NULL_IMPORT_DESCRIPTOR"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "data",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": "__NULL_IMPORT_DESCRIPTOR"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnn64_9_NULL_THUNK_DATA",
+          "_cudnn64_9_NULL_THUNK_DATA"
+        ],
+        "confidence": 0.8500000238418579,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": "data",
+        "normalized": "",
+        "ordinal": null,
+        "raw_name": "cudnn64_9_NULL_THUNK_DATA"
+      }
+    ],
+    "file_type": "import_lib",
+    "format": "ar",
+    "path": "C:\\Users\\cires\\.cudnn\\9.16.0\\lib\\cudnn64_9.lib",
+    "referenced_dlls": [
+      "cudnn64_9",
+      "cudnn64_9.dll",
+      "cudnn64_9"
+    ],
+    "soname": null,
+    "symbols": []
+  }
+}

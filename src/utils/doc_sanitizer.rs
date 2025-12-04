@@ -27,8 +27,11 @@ use regex::Regex;
 /// // and **success** instead of \b success
 /// ```
 pub fn sanitize_doc(s: &str) -> String {
-    let mut result = s.to_string();
+    // STEP 1: Remove carriage returns (CRITICAL - Rust spec forbids \r in doc comments)
+    let mut result = s.replace('\r', "");
 
+    // STEP 2: Handle Doxygen/LaTeX commands
+    
     // Remove \brief (redundant in Rust)
     let re_brief = Regex::new(r"(?m)\\brief\s+").unwrap();
     result = re_brief.replace_all(&result, "").into_owned();
@@ -38,7 +41,7 @@ pub fn sanitize_doc(s: &str) -> String {
     result = re_return.replace_all(&result, "Returns: ").into_owned();
 
     // Convert \param NAME DESC to "- `NAME`: DESC"
-    // Use a simpler regex without lookahead, handle leading whitespace
+    // Important: This creates bullet points which need special handling below
     let re_param = Regex::new(r"(?m)^\s*\\param\s+([A-Za-z0-9_]+)\s+(.+)$").unwrap();
     result = re_param.replace_all(&result, "- `$1`: $2").into_owned();
 
@@ -51,12 +54,10 @@ pub fn sanitize_doc(s: &str) -> String {
     result = re_c.replace_all(&result, "`$1`").into_owned();
 
     // Convert \em text to *text* (emphasis)
-    // Capture single word after \em
     let re_em = Regex::new(r"\\em\s+([A-Za-z0-9_]+)").unwrap();
     result = re_em.replace_all(&result, "*$1*").into_owned();
 
     // Convert \b text to **text** (bold)
-    // Capture single word after \b
     let re_b = Regex::new(r"\\b\s+([A-Za-z0-9_]+)").unwrap();
     result = re_b.replace_all(&result, "**$1**").into_owned();
 
@@ -72,21 +73,47 @@ pub fn sanitize_doc(s: &str) -> String {
     let re_sa = Regex::new(r"(?m)\\sa\s+").unwrap();
     result = re_sa.replace_all(&result, "See also: ").into_owned();
 
-    // Remove other common single-word backslash commands that don't need translation
-    // (like \notefnerr, \note_init_rt, \note_callback, \ingroup, etc.)
+    // Remove other common single-word backslash commands
     let re_cmd = Regex::new(r"\\(?:notefnerr|note_init_rt|note_callback|note_string_api_versions|note_null_stream|ingroup|internal|deprecated|hideinitializer|showinitializer)\b").unwrap();
     result = re_cmd.replace_all(&result, "").into_owned();
 
     // Clean up any remaining unknown backslash commands (conservative)
-    // Only remove if they're clearly command-like (backslash followed by letters)
     let re_unknown = Regex::new(r"\\([A-Za-z_][A-Za-z0-9_]*)\b").unwrap();
     result = re_unknown.replace_all(&result, "").into_owned();
 
-    // Clean up multiple consecutive blank lines
+    // STEP 3: Fix markdown interpretation issues (CRITICAL for rustdoc)
+    //
+    // Problem: rustdoc interprets indented lines starting with - or * as code blocks
+    // Solution: Remove ALL leading whitespace from bullet point lines
+    //
+    // This is based on:
+    // - Rust doc comment spec: content is interpreted as Markdown
+    // - Rustdoc behavior: indented `-` lines trigger code block interpretation
+    let mut fixed_lines = Vec::new();
+    for line in result.lines() {
+        let trimmed = line.trim_start();
+
+        // Check if this is a bullet point line
+        if trimmed.starts_with('-') || trimmed.starts_with('*') || trimmed.starts_with('+') {
+            // For bullet points, remove ALL indentation
+            // This prevents rustdoc from treating them as code blocks
+            fixed_lines.push(trimmed.to_string());
+        } else if trimmed.is_empty() {
+            // Preserve blank lines (important for markdown structure)
+            fixed_lines.push(String::new());
+        } else {
+            // For non-bullet lines, preserve the line as-is
+            // (but consider removing excessive indentation if needed)
+            fixed_lines.push(line.to_string());
+        }
+    }
+    result = fixed_lines.join("\n");
+
+    // STEP 4: Clean up excessive blank lines
     let re_blanks = Regex::new(r"\n{3,}").unwrap();
     result = re_blanks.replace_all(&result, "\n\n").into_owned();
 
-    // Trim leading/trailing whitespace
+    // STEP 5: Trim leading/trailing whitespace
     result.trim().to_string()
 }
 
@@ -246,5 +273,60 @@ mod tests {
         assert!(output.contains("/// This is line one"));
         assert!(output.contains("/// This is line two"));
         assert!(output.contains("/// This is line three"));
+    }
+
+    #[test]
+    fn test_removes_carriage_returns() {
+        // CRITICAL: Rust spec forbids \r in doc comments!
+        let input = "Line one\r\nLine two\r\nLine three";
+        let output = sanitize_doc(input);
+
+        // Should NOT contain any carriage returns
+        assert!(!output.contains('\r'), "Carriage returns must be removed!");
+
+        // Should still have newlines
+        assert!(output.contains('\n'));
+    }
+
+    #[test]
+    fn test_bullet_point_indentation_removed() {
+        // Indented bullet points cause rustdoc to interpret them as code
+        let input = "Some text:\n  - Item one\n  - Item two\n  * Alternative bullet";
+        let output = sanitize_doc(input);
+
+        // Bullet lines should have NO leading whitespace
+        for line in output.lines() {
+            if line.trim_start().starts_with('-') || line.trim_start().starts_with('*') {
+                assert!(
+                    line.starts_with('-') || line.starts_with('*'),
+                    "Bullet point should have no indentation: '{}'",
+                    line
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn test_multiline_with_indented_bullets() {
+        // Test the exact pattern that's failing in cuDNN
+        let input = r#"The following restrictions apply:
+
+    - The owning device of the function cannot change.
+    - A node whose function originally did not use CUDA dynamic parallelism cannot be updated
+      to a function which uses CDP
+    - A node whose function originally did not make device-side update calls cannot be updated
+      to a function which makes device-side update calls."#;
+
+        let result = sanitize_doc(input);
+        println!("Input:\n{}", input);
+        println!("Output:\n{}", result);
+
+        // All bullet points should start without indentation
+        assert!(result.contains("\n- The owning device"));
+        assert!(result.contains("\n- A node whose function originally did not use"));
+        assert!(result.contains("\n- A node whose function originally did not make"));
+
+        // Should not contain indented bullets
+        assert!(!result.contains("    -"));
     }
 }

@@ -1,0 +1,278 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/ciresnave/bindings-generat/library-database.schema.json",
+    "title": "Library Database Schema",
+    "description": "Schema for the bindings-generat library database - contains metadata about C/C++ libraries for automated discovery and installation",
+    "type": "object",
+    "required": [
+        "version",
+        "libraries"
+    ],
+    "properties": {
+        "version": {
+            "type": "string",
+            "description": "Schema version (semantic versioning)",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "libraries": {
+            "type": "array",
+            "description": "List of known libraries with their metadata",
+            "items": {
+                "$ref": "#/definitions/Library"
+            }
+        }
+    },
+    "definitions": {
+        "Library": {
+            "type": "object",
+            "required": [
+                "name",
+                "display_name",
+                "description",
+                "platforms"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Internal library name (used for matching linker errors)",
+                    "examples": [
+                        "cudnn64_9",
+                        "openssl",
+                        "libpng16"
+                    ]
+                },
+                "display_name": {
+                    "type": "string",
+                    "description": "Human-readable library name",
+                    "examples": [
+                        "NVIDIA cuDNN",
+                        "OpenSSL",
+                        "libpng"
+                    ]
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Library version or version range",
+                    "examples": [
+                        "9.x",
+                        "3.x",
+                        "1.6.x"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Brief description of the library's purpose"
+                },
+                "homepage": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Official library homepage URL"
+                },
+                "documentation": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Link to library documentation"
+                },
+                "license": {
+                    "type": "string",
+                    "description": "Library license identifier (SPDX format preferred)",
+                    "examples": [
+                        "MIT",
+                        "Apache-2.0",
+                        "GPL-3.0",
+                        "Proprietary"
+                    ]
+                },
+                "redistributable": {
+                    "type": "boolean",
+                    "description": "Whether the library can be legally redistributed",
+                    "default": false
+                },
+                "platforms": {
+                    "type": "object",
+                    "description": "Platform-specific metadata",
+                    "properties": {
+                        "windows": {
+                            "$ref": "#/definitions/PlatformInfo"
+                        },
+                        "linux": {
+                            "$ref": "#/definitions/PlatformInfo"
+                        },
+                        "macos": {
+                            "$ref": "#/definitions/PlatformInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "PlatformInfo": {
+            "type": "object",
+            "required": [
+                "symbols",
+                "filenames"
+            ],
+            "properties": {
+                "symbols": {
+                    "type": "array",
+                    "description": "Function symbols to detect this library",
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "SSL_library_init",
+                            "SSL_CTX_new"
+                        ]
+                    ]
+                },
+                "filenames": {
+                    "type": "array",
+                    "description": "Library file names (with platform-specific extensions)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "libssl-3-x64.dll",
+                            "libcrypto-3-x64.dll"
+                        ]
+                    ]
+                },
+                "sources": {
+                    "type": "array",
+                    "description": "Available sources for obtaining the library",
+                    "items": {
+                        "$ref": "#/definitions/Source"
+                    }
+                },
+                "dependencies": {
+                    "type": "array",
+                    "description": "Other libraries this one depends on",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "minimum_version": {
+                    "type": "string",
+                    "description": "Minimum required version"
+                },
+                "install_path_hints": {
+                    "type": "array",
+                    "description": "Common installation paths to search",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Source": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "direct_download",
+                        "ftp",
+                        "package_manager",
+                        "source_build",
+                        "github_release",
+                        "git_repo",
+                        "archive_org",
+                        "vendor_specific"
+                    ],
+                    "description": "Type of source for obtaining the library"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL for the source"
+                },
+                "requires_account": {
+                    "type": "boolean",
+                    "description": "Whether an account is needed to access",
+                    "default": false
+                },
+                "requires_login": {
+                    "type": "boolean",
+                    "description": "Whether login is required",
+                    "default": false
+                },
+                "notes": {
+                    "type": "string",
+                    "description": "Additional notes or warnings"
+                },
+                "file_format": {
+                    "type": "string",
+                    "enum": [
+                        "zip",
+                        "tar.gz",
+                        "tar.bz2",
+                        "exe",
+                        "msi",
+                        "deb",
+                        "rpm"
+                    ],
+                    "description": "Archive or installer format"
+                },
+                "manager": {
+                    "type": "string",
+                    "description": "Package manager name (for package_manager type)",
+                    "examples": [
+                        "apt",
+                        "yum",
+                        "chocolatey",
+                        "brew",
+                        "vcpkg"
+                    ]
+                },
+                "package": {
+                    "type": "string",
+                    "description": "Package name in the package manager"
+                },
+                "command": {
+                    "type": "string",
+                    "description": "Command to install the package"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Repository information (if not default)"
+                },
+                "install_instructions": {
+                    "type": "array",
+                    "description": "Step-by-step installation instructions",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "build_instructions": {
+                    "type": "array",
+                    "description": "Build commands (for source_build type)",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "checksum": {
+                    "type": "object",
+                    "description": "File checksum for verification",
+                    "properties": {
+                        "algorithm": {
+                            "type": "string",
+                            "enum": [
+                                "md5",
+                                "sha1",
+                                "sha256",
+                                "sha512"
+                            ]
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

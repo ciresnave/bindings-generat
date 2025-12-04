@@ -5,8 +5,6 @@ use tracing::{debug, info, warn};
 
 /// Validate generated code with cargo check
 pub fn validate_code(output_dir: &Path) -> Result<bool> {
-    info!("Validating generated code with cargo check");
-
     let cargo_toml = output_dir.join("Cargo.toml");
     if !cargo_toml.exists() {
         warn!("Cargo.toml not found, skipping validation");
@@ -31,7 +29,12 @@ pub fn validate_code(output_dir: &Path) -> Result<bool> {
 
         if !output.stderr.is_empty() {
             let stderr = String::from_utf8_lossy(&output.stderr);
-            debug!("cargo check stderr:\n{}", stderr);
+            eprintln!("\n⚠️  Compilation errors:\n{}", stderr);
+            warn!("cargo check stderr:\n{}", stderr);
+        }
+        if !output.stdout.is_empty() {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            debug!("cargo check stdout: {}", stdout);
         }
 
         Ok(false)

@@ -1,8 +1,19 @@
+pub mod changelog_parser;
+pub mod crates_io;
+pub mod google_search;
 pub mod headers;
 pub mod libraries;
 
 use anyhow::Result;
 use std::path::{Path, PathBuf};
+
+pub use changelog_parser::{
+    BreakingChange, ChangelogEntry, ChangelogParser, DeprecationInfo, MigrationGuide,
+};
+pub use crates_io::{RustCrateInfo, format_downloads, is_likely_ffi_crate, search_crates_io};
+pub use google_search::{
+    LibraryInfo, SearchResult, analyze_results, search_library, search_library_enhanced,
+};
 
 /// Information about discovered C/C++ library
 #[derive(Debug, Clone)]

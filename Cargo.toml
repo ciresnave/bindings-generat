@@ -13,9 +13,11 @@
 
 [dependencies]
     # CLI
-    clap      = { version = "4.5", features = ["cargo", "derive"] }
-    dialoguer = "0.12"
-    indicatif = "0.18"
+    clap             = { version = "4", features = ["cargo", "derive"] }
+    console          = "0.16"
+    dialoguer        = "0.12"
+    indicatif        = "0.18"
+    tracing-indicatif = "0.3"
 
     # FFI Generation
     bindgen = "0.72"
@@ -25,33 +27,39 @@
     prettyplease = "0.2"
     proc-macro2  = "1"
     quote        = "1"
-    syn          = { version = "2.0", features = ["full", "parsing", "visit"] }
+    syn          = { version = "2", features = ["full", "parsing", "visit"] }
 
     # LLM Integration
     reqwest    = { version = "0.12", features = ["blocking", "json"] }
-    serde      = { version = "1.0", features = ["derive"] }
-    serde_json = "1.0"
+    serde      = { version = "1", features = ["derive"] }
+    serde_json = "1"
 
     # Utilities
     anyhow    = "1"
     chrono    = { version = "0.4", features = ["serde"] }
+    once_cell = "1.18"
     dirs      = "6"
     regex     = "1"
     sha2      = "0.10"
     tempfile  = "3"
     thiserror = "2"
     toml      = "0.9"
-    uuid      = { version = "1.11", features = ["v4"] }
+    uuid      = { version = "1", features = ["v4"] }
     walkdir   = "2"
 
     # Archive support
     flate2 = "1"
+    
+    # For GitHub API base64 encoding
+    base64 = "0.22"
     tar    = "0.4"
     zip    = "6"
 
     # Logging
     tracing            = "0.1"
     tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+urlencoding = "2"
 
 [dev-dependencies]
     assert_cmd = "2"
@@ -61,6 +69,10 @@
 [[bin]]
     name = "bindings-generat"
     path = "src/main.rs"
+
+[[bin]]
+    name = "test_cudnn_parse"
+    path = "test_cudnn_parse.rs"
 
 [lib]
     name = "bindings_generat"

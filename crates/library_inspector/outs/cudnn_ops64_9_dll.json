@@ -1,0 +1,2287 @@
+{
+  "inspection": {
+    "arch": "X86_64",
+    "checksum": "8ad4a9d2255e2d343567ab50d11834902889317497e8dffdb0b3b70a4ca49d6f",
+    "exports": [
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??0dualDataType_t@@QEAA@AEBW4cudnnDataType_t@@@Z",
+          "_??0dualDataType_t@@QEAA@AEBW4cudnnDataType_t@@@Z",
+          "ordinal:1"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??0dualDataType_t@@QEAA@AEBW4cudnnDataType_t@@@Z",
+        "ordinal": 1,
+        "raw_name": "??0dualDataType_t@@QEAA@AEBW4cudnnDataType_t@@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??0dualDataType_t@@QEAA@AEBW4cudnnKernelDataType_t@@@Z",
+          "_??0dualDataType_t@@QEAA@AEBW4cudnnKernelDataType_t@@@Z",
+          "ordinal:2"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??0dualDataType_t@@QEAA@AEBW4cudnnKernelDataType_t@@@Z",
+        "ordinal": 2,
+        "raw_name": "??0dualDataType_t@@QEAA@AEBW4cudnnKernelDataType_t@@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??4dualDataType_t@@QEAAAEAU0@$$QEAU0@@Z",
+          "_??4dualDataType_t@@QEAAAEAU0@$$QEAU0@@Z",
+          "ordinal:3"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??4dualDataType_t@@QEAAAEAU0@$$QEAU0@@Z",
+        "ordinal": 3,
+        "raw_name": "??4dualDataType_t@@QEAAAEAU0@$$QEAU0@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??4dualDataType_t@@QEAAAEAU0@AEBU0@@Z",
+          "_??4dualDataType_t@@QEAAAEAU0@AEBU0@@Z",
+          "ordinal:4"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??4dualDataType_t@@QEAAAEAU0@AEBU0@@Z",
+        "ordinal": 4,
+        "raw_name": "??4dualDataType_t@@QEAAAEAU0@AEBU0@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??8dualDataType_t@@QEBA_NAEBU0@@Z",
+          "_??8dualDataType_t@@QEBA_NAEBU0@@Z",
+          "ordinal:5"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??8dualDataType_t@@QEBA_NAEBU0@@Z",
+        "ordinal": 5,
+        "raw_name": "??8dualDataType_t@@QEBA_NAEBU0@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??9dualDataType_t@@QEBA_NAEBU0@@Z",
+          "_??9dualDataType_t@@QEBA_NAEBU0@@Z",
+          "ordinal:6"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??9dualDataType_t@@QEBA_NAEBU0@@Z",
+        "ordinal": 6,
+        "raw_name": "??9dualDataType_t@@QEBA_NAEBU0@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??BdualDataType_t@@QEBA?AW4cudnnDataType_t@@XZ",
+          "_??BdualDataType_t@@QEBA?AW4cudnnDataType_t@@XZ",
+          "ordinal:7"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??BdualDataType_t@@QEBA?AW4cudnnDataType_t@@XZ",
+        "ordinal": 7,
+        "raw_name": "??BdualDataType_t@@QEBA?AW4cudnnDataType_t@@XZ"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "??_FdualDataType_t@@QEAAXXZ",
+          "_??_FdualDataType_t@@QEAAXXZ",
+          "ordinal:8"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "??_FdualDataType_t@@QEAAXXZ",
+        "ordinal": 8,
+        "raw_name": "??_FdualDataType_t@@QEAAXXZ"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?createTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@HPEAPEAPEAUcudnnTensorStruct@@@Z",
+          "_?createTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@HPEAPEAPEAUcudnnTensorStruct@@@Z",
+          "ordinal:9"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?createTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@HPEAPEAPEAUcudnnTensorStruct@@@Z",
+        "ordinal": 9,
+        "raw_name": "?createTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@HPEAPEAPEAUcudnnTensorStruct@@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?destroyTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@PEAPEAPEAUcudnnTensorStruct@@@Z",
+          "_?destroyTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@PEAPEAPEAUcudnnTensorStruct@@@Z",
+          "ordinal:10"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?destroyTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@PEAPEAPEAUcudnnTensorStruct@@@Z",
+        "ordinal": 10,
+        "raw_name": "?destroyTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@PEAPEAPEAUcudnnTensorStruct@@@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+          "ordinal:11"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+        "ordinal": 11,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnDropoutStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+          "ordinal:12"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+        "ordinal": 12,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnLRNStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+          "ordinal:13"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+        "ordinal": 13,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnOpTensorStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+          "ordinal:14"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+        "ordinal": 14,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnPoolingStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+          "ordinal:15"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+        "ordinal": 15,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+          "ordinal:16"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+        "ordinal": 16,
+        "raw_name": "?logArg@@YAXPEBDPEBQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBW4cudnnIndicesType_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBW4cudnnIndicesType_t@@PEADPEAHH@Z",
+          "ordinal:17"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBW4cudnnIndicesType_t@@PEADPEAHH@Z",
+        "ordinal": 17,
+        "raw_name": "?logArg@@YAXPEBDPEBW4cudnnIndicesType_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+          "ordinal:18"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+        "ordinal": 18,
+        "raw_name": "?logArg@@YAXPEBDPEBW4cudnnOpTensorOp_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+          "ordinal:19"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+        "ordinal": 19,
+        "raw_name": "?logArg@@YAXPEBDPEBW4cudnnPoolingMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDPEBW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDPEBW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+          "ordinal:20"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDPEBW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+        "ordinal": 20,
+        "raw_name": "?logArg@@YAXPEBDPEBW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+          "ordinal:21"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+        "ordinal": 21,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnDropoutStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+          "ordinal:22"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+        "ordinal": 22,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnLRNStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+          "ordinal:23"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+        "ordinal": 23,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnOpTensorStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+          "ordinal:24"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+        "ordinal": 24,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnPoolingStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+          "ordinal:25"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+        "ordinal": 25,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+          "ordinal:26"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+        "ordinal": 26,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDQEAUcudnnTensorTransformStruct@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDQEAUcudnnTensorTransformStruct@@PEADPEAHH@Z",
+          "ordinal:27"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDQEAUcudnnTensorTransformStruct@@PEADPEAHH@Z",
+        "ordinal": 27,
+        "raw_name": "?logArg@@YAXPEBDQEAUcudnnTensorTransformStruct@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnBatchNormMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnBatchNormMode_t@@PEADPEAHH@Z",
+          "ordinal:28"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnBatchNormMode_t@@PEADPEAHH@Z",
+        "ordinal": 28,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnBatchNormMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnBatchNormOps_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnBatchNormOps_t@@PEADPEAHH@Z",
+          "ordinal:29"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnBatchNormOps_t@@PEADPEAHH@Z",
+        "ordinal": 29,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnBatchNormOps_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnDivNormMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnDivNormMode_t@@PEADPEAHH@Z",
+          "ordinal:30"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnDivNormMode_t@@PEADPEAHH@Z",
+        "ordinal": 30,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnDivNormMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnIndicesType_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnIndicesType_t@@PEADPEAHH@Z",
+          "ordinal:31"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnIndicesType_t@@PEADPEAHH@Z",
+        "ordinal": 31,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnIndicesType_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnLRNMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnLRNMode_t@@PEADPEAHH@Z",
+          "ordinal:32"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnLRNMode_t@@PEADPEAHH@Z",
+        "ordinal": 32,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnLRNMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnNormAlgo_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnNormAlgo_t@@PEADPEAHH@Z",
+          "ordinal:33"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnNormAlgo_t@@PEADPEAHH@Z",
+        "ordinal": 33,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnNormAlgo_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnNormMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnNormMode_t@@PEADPEAHH@Z",
+          "ordinal:34"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnNormMode_t@@PEADPEAHH@Z",
+        "ordinal": 34,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnNormMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnNormOps_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnNormOps_t@@PEADPEAHH@Z",
+          "ordinal:35"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnNormOps_t@@PEADPEAHH@Z",
+        "ordinal": 35,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnNormOps_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+          "ordinal:36"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+        "ordinal": 36,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnOpTensorOp_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+          "ordinal:37"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+        "ordinal": 37,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnPoolingMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+          "ordinal:38"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+        "ordinal": 38,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnSamplerType_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnSamplerType_t@@PEADPEAHH@Z",
+          "ordinal:39"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnSamplerType_t@@PEADPEAHH@Z",
+        "ordinal": 39,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnSamplerType_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnSoftmaxAlgorithm_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnSoftmaxAlgorithm_t@@PEADPEAHH@Z",
+          "ordinal:40"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnSoftmaxAlgorithm_t@@PEADPEAHH@Z",
+        "ordinal": 40,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnSoftmaxAlgorithm_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": "stdcall",
+        "candidates": [
+          "?logArg@@YAXPEBDW4cudnnSoftmaxMode_t@@PEADPEAHH@Z",
+          "_?logArg@@YAXPEBDW4cudnnSoftmaxMode_t@@PEADPEAHH@Z",
+          "ordinal:41"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "?logArg@@YAXPEBDW4cudnnSoftmaxMode_t@@PEADPEAHH@Z",
+        "ordinal": 41,
+        "raw_name": "?logArg@@YAXPEBDW4cudnnSoftmaxMode_t@@PEADPEAHH@Z"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnActivationBackward",
+          "_cudnnActivationBackward",
+          "ordinal:42"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnActivationBackward",
+        "ordinal": 42,
+        "raw_name": "cudnnActivationBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnActivationForward",
+          "_cudnnActivationForward",
+          "ordinal:43"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnActivationForward",
+        "ordinal": 43,
+        "raw_name": "cudnnActivationForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnAddTensor",
+          "_cudnnAddTensor",
+          "ordinal:44"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnAddTensor",
+        "ordinal": 44,
+        "raw_name": "cudnnAddTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnBatchNormalizationBackward",
+          "_cudnnBatchNormalizationBackward",
+          "ordinal:45"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnBatchNormalizationBackward",
+        "ordinal": 45,
+        "raw_name": "cudnnBatchNormalizationBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnBatchNormalizationBackwardEx",
+          "_cudnnBatchNormalizationBackwardEx",
+          "ordinal:46"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnBatchNormalizationBackwardEx",
+        "ordinal": 46,
+        "raw_name": "cudnnBatchNormalizationBackwardEx"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnBatchNormalizationForwardInference",
+          "_cudnnBatchNormalizationForwardInference",
+          "ordinal:47"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnBatchNormalizationForwardInference",
+        "ordinal": 47,
+        "raw_name": "cudnnBatchNormalizationForwardInference"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnBatchNormalizationForwardTraining",
+          "_cudnnBatchNormalizationForwardTraining",
+          "ordinal:48"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnBatchNormalizationForwardTraining",
+        "ordinal": 48,
+        "raw_name": "cudnnBatchNormalizationForwardTraining"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnBatchNormalizationForwardTrainingEx",
+          "_cudnnBatchNormalizationForwardTrainingEx",
+          "ordinal:49"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnBatchNormalizationForwardTrainingEx",
+        "ordinal": 49,
+        "raw_name": "cudnnBatchNormalizationForwardTrainingEx"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateActivationDescriptor",
+          "_cudnnCreateActivationDescriptor",
+          "ordinal:50"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateActivationDescriptor",
+        "ordinal": 50,
+        "raw_name": "cudnnCreateActivationDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateDropoutDescriptor",
+          "_cudnnCreateDropoutDescriptor",
+          "ordinal:51"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateDropoutDescriptor",
+        "ordinal": 51,
+        "raw_name": "cudnnCreateDropoutDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateFilterDescriptor",
+          "_cudnnCreateFilterDescriptor",
+          "ordinal:52"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateFilterDescriptor",
+        "ordinal": 52,
+        "raw_name": "cudnnCreateFilterDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateLRNDescriptor",
+          "_cudnnCreateLRNDescriptor",
+          "ordinal:53"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateLRNDescriptor",
+        "ordinal": 53,
+        "raw_name": "cudnnCreateLRNDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateOpTensorDescriptor",
+          "_cudnnCreateOpTensorDescriptor",
+          "ordinal:54"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateOpTensorDescriptor",
+        "ordinal": 54,
+        "raw_name": "cudnnCreateOpTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreatePoolingDescriptor",
+          "_cudnnCreatePoolingDescriptor",
+          "ordinal:55"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreatePoolingDescriptor",
+        "ordinal": 55,
+        "raw_name": "cudnnCreatePoolingDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateReduceTensorDescriptor",
+          "_cudnnCreateReduceTensorDescriptor",
+          "ordinal:56"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateReduceTensorDescriptor",
+        "ordinal": 56,
+        "raw_name": "cudnnCreateReduceTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateSpatialTransformerDescriptor",
+          "_cudnnCreateSpatialTransformerDescriptor",
+          "ordinal:57"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateSpatialTransformerDescriptor",
+        "ordinal": 57,
+        "raw_name": "cudnnCreateSpatialTransformerDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateTensorDescriptor",
+          "_cudnnCreateTensorDescriptor",
+          "ordinal:58"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateTensorDescriptor",
+        "ordinal": 58,
+        "raw_name": "cudnnCreateTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnCreateTensorTransformDescriptor",
+          "_cudnnCreateTensorTransformDescriptor",
+          "ordinal:59"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnCreateTensorTransformDescriptor",
+        "ordinal": 59,
+        "raw_name": "cudnnCreateTensorTransformDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDeriveBNTensorDescriptor",
+          "_cudnnDeriveBNTensorDescriptor",
+          "ordinal:60"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDeriveBNTensorDescriptor",
+        "ordinal": 60,
+        "raw_name": "cudnnDeriveBNTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDeriveNormTensorDescriptor",
+          "_cudnnDeriveNormTensorDescriptor",
+          "ordinal:61"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDeriveNormTensorDescriptor",
+        "ordinal": 61,
+        "raw_name": "cudnnDeriveNormTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyActivationDescriptor",
+          "_cudnnDestroyActivationDescriptor",
+          "ordinal:62"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyActivationDescriptor",
+        "ordinal": 62,
+        "raw_name": "cudnnDestroyActivationDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyDropoutDescriptor",
+          "_cudnnDestroyDropoutDescriptor",
+          "ordinal:63"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyDropoutDescriptor",
+        "ordinal": 63,
+        "raw_name": "cudnnDestroyDropoutDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyFilterDescriptor",
+          "_cudnnDestroyFilterDescriptor",
+          "ordinal:64"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyFilterDescriptor",
+        "ordinal": 64,
+        "raw_name": "cudnnDestroyFilterDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyLRNDescriptor",
+          "_cudnnDestroyLRNDescriptor",
+          "ordinal:65"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyLRNDescriptor",
+        "ordinal": 65,
+        "raw_name": "cudnnDestroyLRNDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyOpTensorDescriptor",
+          "_cudnnDestroyOpTensorDescriptor",
+          "ordinal:66"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyOpTensorDescriptor",
+        "ordinal": 66,
+        "raw_name": "cudnnDestroyOpTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyPoolingDescriptor",
+          "_cudnnDestroyPoolingDescriptor",
+          "ordinal:67"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyPoolingDescriptor",
+        "ordinal": 67,
+        "raw_name": "cudnnDestroyPoolingDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyReduceTensorDescriptor",
+          "_cudnnDestroyReduceTensorDescriptor",
+          "ordinal:68"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyReduceTensorDescriptor",
+        "ordinal": 68,
+        "raw_name": "cudnnDestroyReduceTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroySpatialTransformerDescriptor",
+          "_cudnnDestroySpatialTransformerDescriptor",
+          "ordinal:69"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroySpatialTransformerDescriptor",
+        "ordinal": 69,
+        "raw_name": "cudnnDestroySpatialTransformerDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyTensorDescriptor",
+          "_cudnnDestroyTensorDescriptor",
+          "ordinal:70"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyTensorDescriptor",
+        "ordinal": 70,
+        "raw_name": "cudnnDestroyTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDestroyTensorTransformDescriptor",
+          "_cudnnDestroyTensorTransformDescriptor",
+          "ordinal:71"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDestroyTensorTransformDescriptor",
+        "ordinal": 71,
+        "raw_name": "cudnnDestroyTensorTransformDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDivisiveNormalizationBackward",
+          "_cudnnDivisiveNormalizationBackward",
+          "ordinal:72"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDivisiveNormalizationBackward",
+        "ordinal": 72,
+        "raw_name": "cudnnDivisiveNormalizationBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDivisiveNormalizationForward",
+          "_cudnnDivisiveNormalizationForward",
+          "ordinal:73"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDivisiveNormalizationForward",
+        "ordinal": 73,
+        "raw_name": "cudnnDivisiveNormalizationForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDropoutBackward",
+          "_cudnnDropoutBackward",
+          "ordinal:74"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDropoutBackward",
+        "ordinal": 74,
+        "raw_name": "cudnnDropoutBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDropoutForward",
+          "_cudnnDropoutForward",
+          "ordinal:75"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDropoutForward",
+        "ordinal": 75,
+        "raw_name": "cudnnDropoutForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDropoutGetReserveSpaceSize",
+          "_cudnnDropoutGetReserveSpaceSize",
+          "ordinal:76"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDropoutGetReserveSpaceSize",
+        "ordinal": 76,
+        "raw_name": "cudnnDropoutGetReserveSpaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnDropoutGetStatesSize",
+          "_cudnnDropoutGetStatesSize",
+          "ordinal:77"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnDropoutGetStatesSize",
+        "ordinal": 77,
+        "raw_name": "cudnnDropoutGetStatesSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetActivationDescriptor",
+          "_cudnnGetActivationDescriptor",
+          "ordinal:78"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetActivationDescriptor",
+        "ordinal": 78,
+        "raw_name": "cudnnGetActivationDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetActivationDescriptorSwishBeta",
+          "_cudnnGetActivationDescriptorSwishBeta",
+          "ordinal:79"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetActivationDescriptorSwishBeta",
+        "ordinal": 79,
+        "raw_name": "cudnnGetActivationDescriptorSwishBeta"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetBatchNormalizationBackwardExWorkspaceSize",
+          "_cudnnGetBatchNormalizationBackwardExWorkspaceSize",
+          "ordinal:80"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetBatchNormalizationBackwardExWorkspaceSize",
+        "ordinal": 80,
+        "raw_name": "cudnnGetBatchNormalizationBackwardExWorkspaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetBatchNormalizationForwardTrainingExWorkspaceSize",
+          "_cudnnGetBatchNormalizationForwardTrainingExWorkspaceSize",
+          "ordinal:81"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetBatchNormalizationForwardTrainingExWorkspaceSize",
+        "ordinal": 81,
+        "raw_name": "cudnnGetBatchNormalizationForwardTrainingExWorkspaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetBatchNormalizationTrainingExReserveSpaceSize",
+          "_cudnnGetBatchNormalizationTrainingExReserveSpaceSize",
+          "ordinal:82"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetBatchNormalizationTrainingExReserveSpaceSize",
+        "ordinal": 82,
+        "raw_name": "cudnnGetBatchNormalizationTrainingExReserveSpaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetDropoutDescriptor",
+          "_cudnnGetDropoutDescriptor",
+          "ordinal:83"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetDropoutDescriptor",
+        "ordinal": 83,
+        "raw_name": "cudnnGetDropoutDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetFilter4dDescriptor",
+          "_cudnnGetFilter4dDescriptor",
+          "ordinal:84"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetFilter4dDescriptor",
+        "ordinal": 84,
+        "raw_name": "cudnnGetFilter4dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetFilterNdDescriptor",
+          "_cudnnGetFilterNdDescriptor",
+          "ordinal:85"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetFilterNdDescriptor",
+        "ordinal": 85,
+        "raw_name": "cudnnGetFilterNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetFilterSizeInBytes",
+          "_cudnnGetFilterSizeInBytes",
+          "ordinal:86"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetFilterSizeInBytes",
+        "ordinal": 86,
+        "raw_name": "cudnnGetFilterSizeInBytes"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetLRNDescriptor",
+          "_cudnnGetLRNDescriptor",
+          "ordinal:87"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetLRNDescriptor",
+        "ordinal": 87,
+        "raw_name": "cudnnGetLRNDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetNormalizationBackwardWorkspaceSize",
+          "_cudnnGetNormalizationBackwardWorkspaceSize",
+          "ordinal:88"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetNormalizationBackwardWorkspaceSize",
+        "ordinal": 88,
+        "raw_name": "cudnnGetNormalizationBackwardWorkspaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetNormalizationForwardTrainingWorkspaceSize",
+          "_cudnnGetNormalizationForwardTrainingWorkspaceSize",
+          "ordinal:89"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetNormalizationForwardTrainingWorkspaceSize",
+        "ordinal": 89,
+        "raw_name": "cudnnGetNormalizationForwardTrainingWorkspaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetNormalizationTrainingReserveSpaceSize",
+          "_cudnnGetNormalizationTrainingReserveSpaceSize",
+          "ordinal:90"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetNormalizationTrainingReserveSpaceSize",
+        "ordinal": 90,
+        "raw_name": "cudnnGetNormalizationTrainingReserveSpaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetOpTensorDescriptor",
+          "_cudnnGetOpTensorDescriptor",
+          "ordinal:91"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetOpTensorDescriptor",
+        "ordinal": 91,
+        "raw_name": "cudnnGetOpTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetPooling2dDescriptor",
+          "_cudnnGetPooling2dDescriptor",
+          "ordinal:92"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetPooling2dDescriptor",
+        "ordinal": 92,
+        "raw_name": "cudnnGetPooling2dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetPooling2dForwardOutputDim",
+          "_cudnnGetPooling2dForwardOutputDim",
+          "ordinal:93"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetPooling2dForwardOutputDim",
+        "ordinal": 93,
+        "raw_name": "cudnnGetPooling2dForwardOutputDim"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetPoolingNdDescriptor",
+          "_cudnnGetPoolingNdDescriptor",
+          "ordinal:94"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetPoolingNdDescriptor",
+        "ordinal": 94,
+        "raw_name": "cudnnGetPoolingNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetPoolingNdForwardOutputDim",
+          "_cudnnGetPoolingNdForwardOutputDim",
+          "ordinal:95"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetPoolingNdForwardOutputDim",
+        "ordinal": 95,
+        "raw_name": "cudnnGetPoolingNdForwardOutputDim"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetReduceTensorDescriptor",
+          "_cudnnGetReduceTensorDescriptor",
+          "ordinal:96"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetReduceTensorDescriptor",
+        "ordinal": 96,
+        "raw_name": "cudnnGetReduceTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetReductionIndicesSize",
+          "_cudnnGetReductionIndicesSize",
+          "ordinal:97"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetReductionIndicesSize",
+        "ordinal": 97,
+        "raw_name": "cudnnGetReductionIndicesSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetReductionWorkspaceSize",
+          "_cudnnGetReductionWorkspaceSize",
+          "ordinal:98"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetReductionWorkspaceSize",
+        "ordinal": 98,
+        "raw_name": "cudnnGetReductionWorkspaceSize"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetTensor4dDescriptor",
+          "_cudnnGetTensor4dDescriptor",
+          "ordinal:99"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetTensor4dDescriptor",
+        "ordinal": 99,
+        "raw_name": "cudnnGetTensor4dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetTensorNdDescriptor",
+          "_cudnnGetTensorNdDescriptor",
+          "ordinal:100"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetTensorNdDescriptor",
+        "ordinal": 100,
+        "raw_name": "cudnnGetTensorNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetTensorSizeInBytes",
+          "_cudnnGetTensorSizeInBytes",
+          "ordinal:101"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetTensorSizeInBytes",
+        "ordinal": 101,
+        "raw_name": "cudnnGetTensorSizeInBytes"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnGetTensorTransformDescriptor",
+          "_cudnnGetTensorTransformDescriptor",
+          "ordinal:102"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnGetTensorTransformDescriptor",
+        "ordinal": 102,
+        "raw_name": "cudnnGetTensorTransformDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnInitTransformDest",
+          "_cudnnInitTransformDest",
+          "ordinal:103"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnInitTransformDest",
+        "ordinal": 103,
+        "raw_name": "cudnnInitTransformDest"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnLRNCrossChannelBackward",
+          "_cudnnLRNCrossChannelBackward",
+          "ordinal:104"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnLRNCrossChannelBackward",
+        "ordinal": 104,
+        "raw_name": "cudnnLRNCrossChannelBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnLRNCrossChannelForward",
+          "_cudnnLRNCrossChannelForward",
+          "ordinal:105"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnLRNCrossChannelForward",
+        "ordinal": 105,
+        "raw_name": "cudnnLRNCrossChannelForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnNormalizationBackward",
+          "_cudnnNormalizationBackward",
+          "ordinal:106"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnNormalizationBackward",
+        "ordinal": 106,
+        "raw_name": "cudnnNormalizationBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnNormalizationForwardInference",
+          "_cudnnNormalizationForwardInference",
+          "ordinal:107"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnNormalizationForwardInference",
+        "ordinal": 107,
+        "raw_name": "cudnnNormalizationForwardInference"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnNormalizationForwardTraining",
+          "_cudnnNormalizationForwardTraining",
+          "ordinal:108"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnNormalizationForwardTraining",
+        "ordinal": 108,
+        "raw_name": "cudnnNormalizationForwardTraining"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnOpTensor",
+          "_cudnnOpTensor",
+          "ordinal:109"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnOpTensor",
+        "ordinal": 109,
+        "raw_name": "cudnnOpTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnOpsVersionCheck",
+          "_cudnnOpsVersionCheck",
+          "ordinal:110"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnOpsVersionCheck",
+        "ordinal": 110,
+        "raw_name": "cudnnOpsVersionCheck"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnPoolingBackward",
+          "_cudnnPoolingBackward",
+          "ordinal:111"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnPoolingBackward",
+        "ordinal": 111,
+        "raw_name": "cudnnPoolingBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnPoolingForward",
+          "_cudnnPoolingForward",
+          "ordinal:112"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnPoolingForward",
+        "ordinal": 112,
+        "raw_name": "cudnnPoolingForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnReduceTensor",
+          "_cudnnReduceTensor",
+          "ordinal:113"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnReduceTensor",
+        "ordinal": 113,
+        "raw_name": "cudnnReduceTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnRestoreDropoutDescriptor",
+          "_cudnnRestoreDropoutDescriptor",
+          "ordinal:114"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnRestoreDropoutDescriptor",
+        "ordinal": 114,
+        "raw_name": "cudnnRestoreDropoutDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnScaleTensor",
+          "_cudnnScaleTensor",
+          "ordinal:115"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnScaleTensor",
+        "ordinal": 115,
+        "raw_name": "cudnnScaleTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetActivationDescriptor",
+          "_cudnnSetActivationDescriptor",
+          "ordinal:116"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetActivationDescriptor",
+        "ordinal": 116,
+        "raw_name": "cudnnSetActivationDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetActivationDescriptorSwishBeta",
+          "_cudnnSetActivationDescriptorSwishBeta",
+          "ordinal:117"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetActivationDescriptorSwishBeta",
+        "ordinal": 117,
+        "raw_name": "cudnnSetActivationDescriptorSwishBeta"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetDropoutDescriptor",
+          "_cudnnSetDropoutDescriptor",
+          "ordinal:118"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetDropoutDescriptor",
+        "ordinal": 118,
+        "raw_name": "cudnnSetDropoutDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetFilter4dDescriptor",
+          "_cudnnSetFilter4dDescriptor",
+          "ordinal:119"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetFilter4dDescriptor",
+        "ordinal": 119,
+        "raw_name": "cudnnSetFilter4dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetFilterNdDescriptor",
+          "_cudnnSetFilterNdDescriptor",
+          "ordinal:120"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetFilterNdDescriptor",
+        "ordinal": 120,
+        "raw_name": "cudnnSetFilterNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetLRNDescriptor",
+          "_cudnnSetLRNDescriptor",
+          "ordinal:121"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetLRNDescriptor",
+        "ordinal": 121,
+        "raw_name": "cudnnSetLRNDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetOpTensorDescriptor",
+          "_cudnnSetOpTensorDescriptor",
+          "ordinal:122"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetOpTensorDescriptor",
+        "ordinal": 122,
+        "raw_name": "cudnnSetOpTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetPooling2dDescriptor",
+          "_cudnnSetPooling2dDescriptor",
+          "ordinal:123"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetPooling2dDescriptor",
+        "ordinal": 123,
+        "raw_name": "cudnnSetPooling2dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetPoolingNdDescriptor",
+          "_cudnnSetPoolingNdDescriptor",
+          "ordinal:124"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetPoolingNdDescriptor",
+        "ordinal": 124,
+        "raw_name": "cudnnSetPoolingNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetReduceTensorDescriptor",
+          "_cudnnSetReduceTensorDescriptor",
+          "ordinal:125"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetReduceTensorDescriptor",
+        "ordinal": 125,
+        "raw_name": "cudnnSetReduceTensorDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetSpatialTransformerNdDescriptor",
+          "_cudnnSetSpatialTransformerNdDescriptor",
+          "ordinal:126"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetSpatialTransformerNdDescriptor",
+        "ordinal": 126,
+        "raw_name": "cudnnSetSpatialTransformerNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensor",
+          "_cudnnSetTensor",
+          "ordinal:127"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensor",
+        "ordinal": 127,
+        "raw_name": "cudnnSetTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensor4dDescriptor",
+          "_cudnnSetTensor4dDescriptor",
+          "ordinal:128"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensor4dDescriptor",
+        "ordinal": 128,
+        "raw_name": "cudnnSetTensor4dDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensor4dDescriptorEx",
+          "_cudnnSetTensor4dDescriptorEx",
+          "ordinal:129"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensor4dDescriptorEx",
+        "ordinal": 129,
+        "raw_name": "cudnnSetTensor4dDescriptorEx"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensorNdDescriptor",
+          "_cudnnSetTensorNdDescriptor",
+          "ordinal:130"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensorNdDescriptor",
+        "ordinal": 130,
+        "raw_name": "cudnnSetTensorNdDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensorNdDescriptorEx",
+          "_cudnnSetTensorNdDescriptorEx",
+          "ordinal:131"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensorNdDescriptorEx",
+        "ordinal": 131,
+        "raw_name": "cudnnSetTensorNdDescriptorEx"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSetTensorTransformDescriptor",
+          "_cudnnSetTensorTransformDescriptor",
+          "ordinal:132"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSetTensorTransformDescriptor",
+        "ordinal": 132,
+        "raw_name": "cudnnSetTensorTransformDescriptor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSoftmaxBackward",
+          "_cudnnSoftmaxBackward",
+          "ordinal:133"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSoftmaxBackward",
+        "ordinal": 133,
+        "raw_name": "cudnnSoftmaxBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSoftmaxForward",
+          "_cudnnSoftmaxForward",
+          "ordinal:134"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSoftmaxForward",
+        "ordinal": 134,
+        "raw_name": "cudnnSoftmaxForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSpatialTfGridGeneratorBackward",
+          "_cudnnSpatialTfGridGeneratorBackward",
+          "ordinal:135"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSpatialTfGridGeneratorBackward",
+        "ordinal": 135,
+        "raw_name": "cudnnSpatialTfGridGeneratorBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSpatialTfGridGeneratorForward",
+          "_cudnnSpatialTfGridGeneratorForward",
+          "ordinal:136"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSpatialTfGridGeneratorForward",
+        "ordinal": 136,
+        "raw_name": "cudnnSpatialTfGridGeneratorForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSpatialTfSamplerBackward",
+          "_cudnnSpatialTfSamplerBackward",
+          "ordinal:137"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSpatialTfSamplerBackward",
+        "ordinal": 137,
+        "raw_name": "cudnnSpatialTfSamplerBackward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnSpatialTfSamplerForward",
+          "_cudnnSpatialTfSamplerForward",
+          "ordinal:138"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnSpatialTfSamplerForward",
+        "ordinal": 138,
+        "raw_name": "cudnnSpatialTfSamplerForward"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnTransformFilter",
+          "_cudnnTransformFilter",
+          "ordinal:139"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnTransformFilter",
+        "ordinal": 139,
+        "raw_name": "cudnnTransformFilter"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnTransformTensor",
+          "_cudnnTransformTensor",
+          "ordinal:140"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnTransformTensor",
+        "ordinal": 140,
+        "raw_name": "cudnnTransformTensor"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnnTransformTensorEx",
+          "_cudnnTransformTensorEx",
+          "ordinal:141"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnnTransformTensorEx",
+        "ordinal": 141,
+        "raw_name": "cudnnTransformTensorEx"
+      },
+      {
+        "calling_convention_hint": null,
+        "candidates": [
+          "cudnn_ops_infer_version",
+          "_cudnn_ops_infer_version",
+          "ordinal:142"
+        ],
+        "confidence": 1.0,
+        "demangled": null,
+        "forwarded_to": null,
+        "kind": null,
+        "normalized": "cudnn_ops_infer_version",
+        "ordinal": 142,
+        "raw_name": "cudnn_ops_infer_version"
+      }
+    ],
+    "file_type": "shared_lib",
+    "format": "pe",
+    "path": "C:\\Users\\cires\\.cudnn\\9.16.0\\bin\\cudnn_ops64_9.dll",
+    "referenced_dlls": [],
+    "soname": null,
+    "symbols": [
+      "??0dualDataType_t@@QEAA@AEBW4cudnnDataType_t@@@Z",
+      "??0dualDataType_t@@QEAA@AEBW4cudnnKernelDataType_t@@@Z",
+      "??4dualDataType_t@@QEAAAEAU0@$$QEAU0@@Z",
+      "??4dualDataType_t@@QEAAAEAU0@AEBU0@@Z",
+      "??8dualDataType_t@@QEBA_NAEBU0@@Z",
+      "??9dualDataType_t@@QEBA_NAEBU0@@Z",
+      "??BdualDataType_t@@QEBA?AW4cudnnDataType_t@@XZ",
+      "??_FdualDataType_t@@QEAAXXZ",
+      "?createTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@HPEAPEAPEAUcudnnTensorStruct@@@Z",
+      "?destroyTensorDescriptorEx@ops@cudnn@@YA?AW4cudnnStatus_t@@PEAPEAPEAUcudnnTensorStruct@@@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBW4cudnnIndicesType_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDPEBW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnDropoutStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnLRNStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnOpTensorStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnPoolingStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnReduceTensorStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnSpatialTransformerStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDQEAUcudnnTensorTransformStruct@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnBatchNormMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnBatchNormOps_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnDivNormMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnIndicesType_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnLRNMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnNormAlgo_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnNormMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnNormOps_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnOpTensorOp_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnPoolingMode_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnReduceTensorIndices_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnSamplerType_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnSoftmaxAlgorithm_t@@PEADPEAHH@Z",
+      "?logArg@@YAXPEBDW4cudnnSoftmaxMode_t@@PEADPEAHH@Z",
+      "cudnnActivationBackward",
+      "cudnnActivationForward",
+      "cudnnAddTensor",
+      "cudnnBatchNormalizationBackward",
+      "cudnnBatchNormalizationBackwardEx",
+      "cudnnBatchNormalizationForwardInference",
+      "cudnnBatchNormalizationForwardTraining",
+      "cudnnBatchNormalizationForwardTrainingEx",
+      "cudnnCreateActivationDescriptor",
+      "cudnnCreateDropoutDescriptor",
+      "cudnnCreateFilterDescriptor",
+      "cudnnCreateLRNDescriptor",
+      "cudnnCreateOpTensorDescriptor",
+      "cudnnCreatePoolingDescriptor",
+      "cudnnCreateReduceTensorDescriptor",
+      "cudnnCreateSpatialTransformerDescriptor",
+      "cudnnCreateTensorDescriptor",
+      "cudnnCreateTensorTransformDescriptor",
+      "cudnnDeriveBNTensorDescriptor",
+      "cudnnDeriveNormTensorDescriptor",
+      "cudnnDestroyActivationDescriptor",
+      "cudnnDestroyDropoutDescriptor",
+      "cudnnDestroyFilterDescriptor",
+      "cudnnDestroyLRNDescriptor",
+      "cudnnDestroyOpTensorDescriptor",
+      "cudnnDestroyPoolingDescriptor",
+      "cudnnDestroyReduceTensorDescriptor",
+      "cudnnDestroySpatialTransformerDescriptor",
+      "cudnnDestroyTensorDescriptor",
+      "cudnnDestroyTensorTransformDescriptor",
+      "cudnnDivisiveNormalizationBackward",
+      "cudnnDivisiveNormalizationForward",
+      "cudnnDropoutBackward",
+      "cudnnDropoutForward",
+      "cudnnDropoutGetReserveSpaceSize",
+      "cudnnDropoutGetStatesSize",
+      "cudnnGetActivationDescriptor",
+      "cudnnGetActivationDescriptorSwishBeta",
+      "cudnnGetBatchNormalizationBackwardExWorkspaceSize",
+      "cudnnGetBatchNormalizationForwardTrainingExWorkspaceSize",
+      "cudnnGetBatchNormalizationTrainingExReserveSpaceSize",
+      "cudnnGetDropoutDescriptor",
+      "cudnnGetFilter4dDescriptor",
+      "cudnnGetFilterNdDescriptor",
+      "cudnnGetFilterSizeInBytes",
+      "cudnnGetLRNDescriptor",
+      "cudnnGetNormalizationBackwardWorkspaceSize",
+      "cudnnGetNormalizationForwardTrainingWorkspaceSize",
+      "cudnnGetNormalizationTrainingReserveSpaceSize",
+      "cudnnGetOpTensorDescriptor",
+      "cudnnGetPooling2dDescriptor",
+      "cudnnGetPooling2dForwardOutputDim",
+      "cudnnGetPoolingNdDescriptor",
+      "cudnnGetPoolingNdForwardOutputDim",
+      "cudnnGetReduceTensorDescriptor",
+      "cudnnGetReductionIndicesSize",
+      "cudnnGetReductionWorkspaceSize",
+      "cudnnGetTensor4dDescriptor",
+      "cudnnGetTensorNdDescriptor",
+      "cudnnGetTensorSizeInBytes",
+      "cudnnGetTensorTransformDescriptor",
+      "cudnnInitTransformDest",
+      "cudnnLRNCrossChannelBackward",
+      "cudnnLRNCrossChannelForward",
+      "cudnnNormalizationBackward",
+      "cudnnNormalizationForwardInference",
+      "cudnnNormalizationForwardTraining",
+      "cudnnOpTensor",
+      "cudnnOpsVersionCheck",
+      "cudnnPoolingBackward",
+      "cudnnPoolingForward",
+      "cudnnReduceTensor",
+      "cudnnRestoreDropoutDescriptor",
+      "cudnnScaleTensor",
+      "cudnnSetActivationDescriptor",
+      "cudnnSetActivationDescriptorSwishBeta",
+      "cudnnSetDropoutDescriptor",
+      "cudnnSetFilter4dDescriptor",
+      "cudnnSetFilterNdDescriptor",
+      "cudnnSetLRNDescriptor",
+      "cudnnSetOpTensorDescriptor",
+      "cudnnSetPooling2dDescriptor",
+      "cudnnSetPoolingNdDescriptor",
+      "cudnnSetReduceTensorDescriptor",
+      "cudnnSetSpatialTransformerNdDescriptor",
+      "cudnnSetTensor",
+      "cudnnSetTensor4dDescriptor",
+      "cudnnSetTensor4dDescriptorEx",
+      "cudnnSetTensorNdDescriptor",
+      "cudnnSetTensorNdDescriptorEx",
+      "cudnnSetTensorTransformDescriptor",
+      "cudnnSoftmaxBackward",
+      "cudnnSoftmaxForward",
+      "cudnnSpatialTfGridGeneratorBackward",
+      "cudnnSpatialTfGridGeneratorForward",
+      "cudnnSpatialTfSamplerBackward",
+      "cudnnSpatialTfSamplerForward",
+      "cudnnTransformFilter",
+      "cudnnTransformTensor",
+      "cudnnTransformTensorEx",
+      "cudnn_ops_infer_version"
+    ]
+  }
+}

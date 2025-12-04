@@ -192,6 +192,41 @@ impl OllamaClient {
             let body = response
                 .text()
                 .unwrap_or_else(|_| String::from("(no body)"));
+            
+            // Check if this is a model not found error
+            if status.as_u16() == 404 && body.contains("not found") {
+                info!("Model '{}' not found, attempting to pull it...", model);
+                
+                // Try to pull the model
+                if let Err(pull_error) = self.pull_model(model) {
+                    warn!("Failed to pull model '{}': {}", model, pull_error);
+                    anyhow::bail!("Model '{}' not found and could not be pulled: {}", model, pull_error);
+                }
+                
+                // Retry the generation request after pulling the model
+                info!("Retrying generation with newly pulled model '{}'...", model);
+                let retry_response = self
+                    .client
+                    .post(format!("{}/api/generate", self.base_url))
+                    .json(&request)
+                    .send()
+                    .context("Failed to send retry request to Ollama after pulling model")?;
+                
+                if !retry_response.status().is_success() {
+                    let status = retry_response.status();
+                    let retry_body = retry_response
+                        .text()
+                        .unwrap_or_else(|_| String::from("(no body)"));
+                    warn!("Retry failed after pulling model '{}': {} - {}", model, status, retry_body);
+                    anyhow::bail!("Model '{}' still not available after pulling: {} - {}", model, status, retry_body);
+                }
+                
+                let generate_response: GenerateResponse =
+                    retry_response.json().context("Failed to parse Ollama response after model pull")?;
+                
+                return Ok(generate_response.response);
+            }
+            
             anyhow::bail!("Ollama returned error {}: {}", status, body);
         }
 
@@ -204,6 +239,47 @@ impl OllamaClient {
         );
 
         Ok(generate_response.response)
+    }
+
+    /// Pull a model from Ollama's library
+    fn pull_model(&self, model: &str) -> Result<()> {
+        info!("Pulling model '{}' from Ollama library...", model);
+
+        #[derive(Serialize)]
+        struct PullRequest {
+            name: String,
+        }
+
+        let request = PullRequest {
+            name: model.to_string(),
+        };
+
+        let response = self
+            .client
+            .post(format!("{}/api/pull", self.base_url))
+            .json(&request)
+            .timeout(Duration::from_secs(300)) // 5 minutes timeout for model download
+            .send()
+            .context("Failed to send pull request to Ollama")?;
+
+        if !response.status().is_success() {
+            let status = response.status();
+            let body = response
+                .text()
+                .unwrap_or_else(|_| String::from("(no body)"));
+            anyhow::bail!("Failed to pull model '{}': {} - {}", model, status, body);
+        }
+
+        // Read the streaming response to ensure pull completes
+        let response_text = response.text().context("Failed to read pull response")?;
+        debug!("Pull response: {}", response_text);
+
+        info!("✓ Successfully pulled model '{}'", model);
+
+        // Give Ollama a moment to index the new model
+        std::thread::sleep(std::time::Duration::from_millis(500));
+
+        Ok(())
     }
 
     /// List available models

@@ -29,8 +29,20 @@ pub struct Cli {
     #[arg(long, value_name = "NAME")]
     pub lib_name: Option<String>,
 
-    /// LLM model for Ollama (default: deepseek-coder:6.7b)
-    #[arg(long, value_name = "MODEL", default_value = "deepseek-coder:6.7b")]
+    /// Additional include directories for dependencies
+    #[arg(long = "include", value_name = "PATH", action = clap::ArgAction::Append)]
+    pub include_dirs: Vec<PathBuf>,
+
+    /// Link libraries for dependencies (e.g. 'cuda', 'cudnn')  
+    #[arg(long = "link", value_name = "LIB", action = clap::ArgAction::Append)]
+    pub link_libs: Vec<String>,
+
+    /// Link library search paths
+    #[arg(long = "lib-path", value_name = "PATH", action = clap::ArgAction::Append)]
+    pub lib_paths: Vec<PathBuf>,
+
+    /// LLM model for Ollama (default: llama3.2:1b)
+    #[arg(long, value_name = "MODEL", default_value = "llama3.2:1b")]
     pub model: String,
 
     /// Skip LLM enhancement (faster, less documentation)
@@ -57,9 +69,19 @@ pub struct Cli {
     #[arg(long)]
     pub dry_run: bool,
 
+    /// Run publishing wizard after generation
+    #[arg(long)]
+    pub publish: bool,
+
     /// Verbose output
     #[arg(short = 'v', long)]
     pub verbose: bool,
+    /// Bundle the library into the generated crate (opt-in; obeys license)
+    #[arg(long = "bundle-library")]
+    pub bundle_library: bool,
+    /// Enable build-time library discovery (deprecated; opt-in)
+    #[arg(long = "enable-build-discovery")]
+    pub enable_build_discovery: bool,
 }
 
 impl Cli {
@@ -107,6 +129,9 @@ mod tests {
             output: None,
             headers: None,
             lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
             model: "qwen2.5-coder:1.5b".to_string(),
             no_llm: false,
             interactive: false,
@@ -114,7 +139,10 @@ mod tests {
             style: "ergonomic".to_string(),
             cache_dir: None,
             dry_run: false,
+            publish: false,
             verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
         };
 
         assert_eq!(cli.get_output_dir(), PathBuf::from("./bindings-output"));
@@ -127,6 +155,9 @@ mod tests {
             output: Some(PathBuf::from("/custom/path")),
             headers: None,
             lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
             model: "qwen2.5-coder:1.5b".to_string(),
             no_llm: false,
             interactive: false,
@@ -134,9 +165,321 @@ mod tests {
             style: "ergonomic".to_string(),
             cache_dir: None,
             dry_run: false,
+            publish: false,
             verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
         };
 
         assert_eq!(cli.get_output_dir(), PathBuf::from("/custom/path"));
+    }
+
+    #[test]
+    fn test_default_values() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        // Verify default values
+        assert!(!cli.no_llm);
+        assert!(!cli.interactive);
+        assert!(!cli.non_interactive);
+        assert_eq!(cli.style, "ergonomic");
+        assert!(!cli.dry_run);
+        assert!(!cli.publish);
+        assert!(!cli.verbose);
+    }
+
+    #[test]
+    fn test_llm_flag() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: true,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert!(cli.no_llm);
+    }
+
+    #[test]
+    fn test_interactive_modes() {
+        // Interactive mode
+        let interactive = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: true,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert!(interactive.interactive);
+        assert!(!interactive.non_interactive);
+
+        // Non-interactive mode
+        let non_interactive = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: true,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert!(!non_interactive.interactive);
+        assert!(non_interactive.non_interactive);
+    }
+
+    #[test]
+    fn test_style_options() {
+        let styles = vec!["ergonomic", "unsafe", "minimal"];
+
+        for style in styles {
+            let cli = Cli {
+                source: "test.h".to_string(),
+                output: None,
+                headers: None,
+                lib_name: None,
+                include_dirs: Vec::new(),
+                link_libs: Vec::new(),
+                lib_paths: Vec::new(),
+                model: "qwen2.5-coder:1.5b".to_string(),
+                no_llm: false,
+                interactive: false,
+                non_interactive: false,
+                style: style.to_string(),
+                cache_dir: None,
+                dry_run: false,
+                publish: false,
+                verbose: false,
+                bundle_library: false,
+                enable_build_discovery: false,
+            };
+
+            assert_eq!(cli.style, style);
+        }
+    }
+
+    #[test]
+    fn test_verbose_flag() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: true,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert!(cli.verbose);
+    }
+
+    #[test]
+    fn test_dry_run_flag() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: true,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert!(cli.dry_run);
+    }
+
+    #[test]
+    fn test_multiple_include_dirs() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: vec![
+                PathBuf::from("/usr/include"),
+                PathBuf::from("/usr/local/include"),
+                PathBuf::from("./include"),
+            ],
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert_eq!(cli.include_dirs.len(), 3);
+        assert_eq!(cli.include_dirs[0], PathBuf::from("/usr/include"));
+        assert_eq!(cli.include_dirs[1], PathBuf::from("/usr/local/include"));
+        assert_eq!(cli.include_dirs[2], PathBuf::from("./include"));
+    }
+
+    #[test]
+    fn test_link_libraries() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: vec!["cuda".to_string(), "cudnn".to_string()],
+            lib_paths: vec![PathBuf::from("/usr/lib"), PathBuf::from("/usr/local/lib")],
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert_eq!(cli.link_libs.len(), 2);
+        assert_eq!(cli.link_libs[0], "cuda");
+        assert_eq!(cli.link_libs[1], "cudnn");
+        assert_eq!(cli.lib_paths.len(), 2);
+    }
+
+    #[test]
+    fn test_custom_cache_dir() {
+        let custom_cache = PathBuf::from("/tmp/custom-cache");
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: None,
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: Some(custom_cache.clone()),
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert_eq!(cli.cache_dir, Some(custom_cache));
+    }
+
+    #[test]
+    fn test_lib_name_override() {
+        let cli = Cli {
+            source: "test.h".to_string(),
+            output: None,
+            headers: None,
+            lib_name: Some("my_custom_lib".to_string()),
+            include_dirs: Vec::new(),
+            link_libs: Vec::new(),
+            lib_paths: Vec::new(),
+            model: "qwen2.5-coder:1.5b".to_string(),
+            no_llm: false,
+            interactive: false,
+            non_interactive: false,
+            style: "ergonomic".to_string(),
+            cache_dir: None,
+            dry_run: false,
+            publish: false,
+            verbose: false,
+            bundle_library: false,
+            enable_build_discovery: false,
+        };
+
+        assert_eq!(cli.lib_name, Some("my_custom_lib".to_string()));
     }
 }

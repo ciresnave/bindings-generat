@@ -1,23 +1,28 @@
 use anyhow::Result;
 use bindings_generat::{BindingsGenerator, Cli, Config};
 use clap::Parser;
-use tracing_subscriber::{EnvFilter, fmt};
+use tracing_indicatif::IndicatifLayer;
+use tracing_subscriber::{EnvFilter, fmt, prelude::*};
 
 fn main() -> Result<()> {
     // Parse CLI arguments
     let cli = Cli::parse();
 
-    // Set up logging
+    // Set up logging with progress bar awareness
+    // When verbose, enable debug for our crate but keep bindgen quiet
     let filter = if cli.verbose {
-        EnvFilter::new("debug")
+        EnvFilter::new("bindings_generat=debug,info")
     } else {
         EnvFilter::new("info")
     };
 
-    fmt()
-        .with_env_filter(filter)
-        .with_target(false)
-        .without_time()
+    // Create indicatif layer for progress bars
+    let indicatif_layer = IndicatifLayer::new();
+
+    tracing_subscriber::registry()
+        .with(filter)
+        .with(fmt::layer().with_target(false).without_time())
+        .with(indicatif_layer)
         .init();
 
     // Validate arguments
@@ -47,8 +52,16 @@ fn main() -> Result<()> {
     };
 
     // Run the generator
-    let mut generator = BindingsGenerator::new(config);
+    let mut generator = BindingsGenerator::new(config.clone());
     generator.run()?;
+
+    // Run publishing wizard if requested
+    if cli.publish {
+        use bindings_generat::publishing::wizard;
+        let output_dir = config.output_path;
+        println!("\n"); // Visual separator
+        wizard::run_wizard(output_dir)?;
+    }
 
     Ok(())
 }

@@ -1,0 +1,20 @@
+[package]
+    authors     = ["bindings-generat <ciresnave@gmail.com>"]
+    description = "Standalone crate to analyze C header files and emit a JSON representation of the FFI surface."
+    edition     = "2024"
+    license     = "MIT OR Apache-2.0"
+    name        = "c_header_analyzer"
+    version     = "0.1.0"
+
+[dependencies]
+    anyhow     = "1"
+    bindgen    = "0.72"
+    clap       = { version = "4", features = ["derive"] }
+    quote      = "1"
+    serde      = { version = "1", features = ["derive"] }
+    serde_json = "1"
+    syn        = { version = "2", features = ["full", "parsing", "visit"] }
+    tracing    = "0.1"
+
+    [package.metadata]
+        # This is standalone; it can be integrated into the main crate later via a path dependency.

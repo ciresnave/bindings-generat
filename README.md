@@ -17,6 +17,12 @@ Automatically generate safe, idiomatic Rust wrapper crates from C/C++ libraries 
 - **Smart Ownership Analysis**: Determines proper lifetime and ownership patterns
 - **LLM-Enhanced Documentation**: Uses local Ollama to generate comprehensive docs and examples (enabled by default)
 - **Idiomatic Naming**: LLM suggests Rust-friendly names for C-style functions
+- **🎉 Ecosystem Integration (100+ Crates)**: Automatically integrates with the entire Rust ecosystem!
+  - Detects library category (Math, Graphics, ML, Networking, etc.)
+  - Recommends relevant crates from 100+ supported libraries
+  - Generates Cargo.toml with proper feature flags
+  - 12-tier prioritization system (Universal → Low-level Protocols)
+  - **First FFI generator with comprehensive ecosystem awareness**
 - **Archive Support**: Accepts .zip, .tar.gz, .tar, and .gz files as input
 - **Remote Downloads**: Download archives directly from URLs (http/https)
 - **Interactive Mode**: Asks clarifying questions for ambiguous cases (optional)

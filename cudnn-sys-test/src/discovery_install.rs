@@ -1,0 +1,1 @@
+// discovery_install stub — installer not generated

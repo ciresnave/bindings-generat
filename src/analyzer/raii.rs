@@ -1,5 +1,5 @@
 use crate::ffi::{FfiFunction, FfiInfo};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use tracing::{debug, info};
 
 /// Detected RAII patterns in the FFI
@@ -25,6 +25,39 @@ pub struct LifecyclePair {
     pub confidence: f32, // 0.0 to 1.0
 }
 
+/// Recursively resolve type aliases to their underlying type
+///
+/// Example: cudnnHandle_t -> *mut cudnnContext
+fn resolve_type_alias(
+    type_name: &str,
+    type_aliases: &HashMap<String, String>,
+    visited: &mut HashSet<String>,
+) -> String {
+    // Prevent infinite recursion from circular type aliases
+    if visited.contains(type_name) {
+        debug!("Circular type alias detected for: {}", type_name);
+        return type_name.to_string();
+    }
+
+    visited.insert(type_name.to_string());
+
+    // Look up the type alias
+    if let Some(target_type) = type_aliases.get(type_name) {
+        // Extract the base type name if it's a pointer type
+        let base = extract_base_type(target_type);
+
+        // If the target is also an alias, recursively resolve it
+        if type_aliases.contains_key(&base) {
+            return resolve_type_alias(&base, type_aliases, visited);
+        }
+
+        // Return the resolved target type
+        return target_type.clone();
+    }
+
+    // Not an alias, return as-is
+    type_name.to_string()
+}
 impl Default for RaiiPatterns {
     fn default() -> Self {
         Self::new()
@@ -93,20 +126,64 @@ fn identify_handle_types(ffi_info: &FfiInfo) -> Vec<HandleType> {
         });
     }
 
+    // Check type aliases that resolve to pointers
+    for alias_name in ffi_info.type_aliases.keys() {
+        // Resolve the alias to its underlying type
+        let mut visited = HashSet::new();
+        let resolved = resolve_type_alias(alias_name, &ffi_info.type_aliases, &mut visited);
+
+        // Check if the resolved type is a pointer
+        if resolved.contains("*") {
+            debug!(
+                "Type alias {} resolves to pointer type: {}",
+                alias_name, resolved
+            );
+
+            // Skip if already added (might be in opaque_types)
+            if handles.iter().any(|h| h.name == *alias_name) {
+                continue;
+            }
+
+            // Add as handle type
+            handles.push(HandleType {
+                name: alias_name.clone(),
+                is_pointer: true,
+                create_functions: Vec::new(),
+                destroy_functions: Vec::new(),
+            });
+        }
+    }
+
     // Check for types that are used as pointers in functions
     let mut pointer_types: HashMap<String, usize> = HashMap::new();
     for func in &ffi_info.functions {
         for param in &func.params {
             if param.is_pointer {
                 let base_type = extract_base_type(&param.ty);
-                *pointer_types.entry(base_type).or_insert(0) += 1;
+
+                // Resolve if it's an alias
+                let mut visited = HashSet::new();
+                let resolved = resolve_type_alias(&base_type, &ffi_info.type_aliases, &mut visited);
+
+                // Only count if the resolved type is also a pointer (handle pattern)
+                if resolved.contains("*") {
+                    *pointer_types.entry(base_type).or_insert(0) += 1;
+                }
             }
         }
 
         // Check return type
         if func.return_type.contains("*") {
             let base_type = extract_base_type(&func.return_type);
-            *pointer_types.entry(base_type).or_insert(0) += 1;
+
+            // Resolve if it's an alias
+            let mut visited = HashSet::new();
+            let resolved = resolve_type_alias(&base_type, &ffi_info.type_aliases, &mut visited);
+
+            // Only count if the resolved type is also a pointer (handle pattern)
+            if resolved.contains("*") {
+                *pointer_types.entry(base_type).or_insert(0) += 1;
+            }
         }
     }
 
@@ -174,28 +251,30 @@ fn identify_handle_types(ffi_info: &FfiInfo) -> Vec<HandleType> {
         if type_name.is_empty() || primitive_types.contains(&type_name.as_str()) {
             continue;
         }
-        
+
         // Skip if the type contains :: (it's already a Rust path, not a C type)
         if type_name.contains("::") {
             debug!("Skipping Rust path type: {}", type_name);
             continue;
         }
-        
+
         // For types ending in _t, only consider them if they have handle-like keywords
         if type_name.ends_with("_t") {
             let lower_name = type_name.to_lowercase();
-            let is_handle = handle_keywords.iter().any(|keyword| lower_name.contains(keyword));
+            let is_handle = handle_keywords
+                .iter()
+                .any(|keyword| lower_name.contains(keyword));
             if !is_handle {
                 debug!("Skipping non-handle type ending in _t: {}", type_name);
                 continue;
             }
         }
-        
+
         // Skip if already added
         if handles.iter().any(|h| h.name == type_name) {
             continue;
         }
-        
+
         // Must be used at least twice as a pointer
         if count >= 2 {
             debug!(
@@ -226,17 +305,46 @@ fn find_lifecycle_pairs(
         "destroy", "delete", "free", "close", "cleanup", "finish", "stop", "release",
     ];
 
+    // Exclude words that indicate operations rather than destruction
+    // e.g., "cudaGraphAddMemFreeNode" has "free" but it's "add" + "free node", not "free" the handle
+    let exclude_patterns = ["add", "insert", "append", "push", "enqueue", "get", "set"];
+
     // Group functions by their base name (without create/destroy prefix)
     for handle in handle_types {
         let create_funcs: Vec<_> = functions
             .iter()
             .filter(|f| {
                 let lower_name = f.name.to_lowercase();
-                // Check if function returns a pointer to this handle type
-                let returns_handle = f.return_type.contains(&handle.name);
                 // Check if function name suggests creation
                 let has_create_pattern = create_patterns.iter().any(|p| lower_name.contains(p));
-                returns_handle && has_create_pattern
+
+                if !has_create_pattern {
+                    return false;
+                }
+
+                // Exclude compound operations like "AddCreate" or "GetCreate"
+                let has_exclude = exclude_patterns.iter().any(|p| lower_name.contains(p));
+                if has_exclude {
+                    return false;
+                }
+
+                // Check if function returns a pointer to this handle type
+                let returns_handle = f.return_type.contains(&handle.name);
+
+                // Check if function has an output parameter (first param is *mut handle_type)
+                // This is the most common C pattern: status_t create(*mut handle_t out)
+                let has_output_param = f
+                    .params
+                    .first()
+                    .map(|p| {
+                        // Check if it's a mutable pointer to this handle type
+                        let is_mut_ptr = p.ty.contains("*mut") || p.ty.contains("* mut");
+                        let is_handle_type = p.ty.contains(&handle.name);
+                        is_mut_ptr && is_handle_type
+                    })
+                    .unwrap_or(false);
+
+                returns_handle || has_output_param
             })
             .collect();
 
@@ -248,7 +356,11 @@ fn find_lifecycle_pairs(
                 let takes_handle = f.params.iter().any(|p| p.ty.contains(&handle.name));
                 // Check if function name suggests destruction
                 let has_destroy_pattern = destroy_patterns.iter().any(|p| lower_name.contains(p));
-                takes_handle && has_destroy_pattern
+
+                // Exclude compound operations like "AddFree" or "GetDestroy"
+                let has_exclude = exclude_patterns.iter().any(|p| lower_name.contains(p));
+
+                takes_handle && has_destroy_pattern && !has_exclude
             })
             .collect();
 
@@ -281,16 +393,20 @@ fn find_lifecycle_pairs(
 fn calculate_pair_confidence(create_func: &FfiFunction, destroy_func: &FfiFunction) -> f32 {
     let mut confidence: f32 = 0.5; // Base confidence
 
-    let create_lower = create_func.name.to_lowercase();
-    let destroy_lower = destroy_func.name.to_lowercase();
-
     // Remove common prefixes/suffixes to find the core name
-    let create_core = extract_core_name(&create_lower);
-    let destroy_core = extract_core_name(&destroy_lower);
+    // NOTE: Pass original names, not lowercased - extract_core_name needs camelCase boundaries!
+    let create_core = extract_core_name(&create_func.name);
+    let destroy_core = extract_core_name(&destroy_func.name);
+
+    debug!(
+        "calculate_pair_confidence: {} -> '{}' vs {} -> '{}'",
+        create_func.name, create_core, destroy_func.name, destroy_core
+    );
 
     // If core names match, high confidence
     if create_core == destroy_core {
         confidence += 0.3;
+        debug!("  Core names match! confidence now {}", confidence);
     }
 
     // If names are similar (edit distance), medium confidence
@@ -316,33 +432,90 @@ fn extract_base_type(type_str: &str) -> String {
 }
 
 fn extract_core_name(name: &str) -> String {
-    let mut core = name.to_string();
+    let lower = name.to_lowercase();
 
-    // Remove common prefixes
-    let prefixes = [
-        "create_", "new_", "init_", "open_", "alloc_", "make_", "start_", "destroy_", "delete_",
-        "free_", "close_", "cleanup_", "finish_", "stop_", "release_",
+    // List of lifecycle verbs to strip (both create and destroy verbs)
+    // IMPORTANT: Order matters! Longer verbs (like "malloc") must come before shorter ones (like "alloc")
+    // to prevent partial matches (e.g., "malloc" should match before "alloc")
+    let lifecycle_verbs = [
+        "create",
+        "initialize",
+        "allocate",
+        "malloc", // Must come before "alloc" to match "cudaMallocArray" correctly
+        "destroy",
+        "release",
+        "dispose",
+        "cleanup",
+        "finalize",
+        "new",
+        "init",
+        "open",
+        "alloc",
+        "make",
+        "start",
+        "begin",
+        "delete",
+        "free",
+        "close",
+        "finish",
+        "stop",
+        "end",
     ];
-    for prefix in &prefixes {
-        if core.starts_with(prefix) {
-            core = core[prefix.len()..].to_string();
-            break;
+
+    // Try to find and remove a lifecycle verb from the name
+    // Handle both camelCase (cudnnCreatePooling) and snake_case (cudnn_create_pooling)
+    for verb in &lifecycle_verbs {
+        // Check for snake_case: prefix_verb_ or _verb_suffix
+        let snake_prefix = format!("_{}_", verb);
+        let snake_start = format!("{}_", verb);
+        let snake_end = format!("_{}", verb);
+
+        if lower.contains(&snake_prefix) {
+            // e.g., "cudnn_create_pooling" -> "cudnn_pooling"
+            return name.replace(&snake_prefix, "_");
+        } else if lower.starts_with(&snake_start) {
+            // e.g., "create_pooling" -> "pooling"
+            return name[snake_start.len()..].to_string();
+        } else if lower.ends_with(&snake_end) {
+            // e.g., "pooling_create" -> "pooling"
+            return name[..name.len() - snake_end.len()].to_string();
+        }
+
+        // Check for camelCase: PrefixVerbSuffix
+        // Find the verb in lowercase version
+        if let Some(verb_pos) = lower.find(verb) {
+            // Make sure it's at a word boundary (preceded by lowercase or start, followed by uppercase or end)
+            let is_word_start = verb_pos == 0
+                || lower
+                    .chars()
+                    .nth(verb_pos - 1)
+                    .map(|c| c.is_lowercase() || c == '_')
+                    .unwrap_or(false);
+
+            let verb_end = verb_pos + verb.len();
+            let is_word_end = verb_end >= name.len()
+                || name
+                    .chars()
+                    .nth(verb_end)
+                    .map(|c| c.is_uppercase() || c == '_' || c.is_numeric())
+                    .unwrap_or(false);
+
+            if is_word_start && is_word_end {
+                // Found a valid verb boundary - remove it
+                // e.g., "cudnnCreatePoolingDescriptor"
+                //   verb_pos = 5, verb = "create" (len 6)
+                //   result: "cudnn" + "PoolingDescriptor"
+                let before = &name[..verb_pos];
+                let after = &name[verb_end..];
+
+                // Keep the prefix, drop the verb, keep the suffix
+                return format!("{}{}", before, after);
+            }
         }
     }
 
-    // Remove common suffixes
-    let suffixes = [
-        "_create", "_new", "_init", "_open", "_alloc", "_make", "_start", "_destroy", "_delete",
-        "_free", "_close", "_cleanup", "_finish", "_stop", "_release",
-    ];
-    for suffix in &suffixes {
-        if core.ends_with(suffix) {
-            core = core[..core.len() - suffix.len()].to_string();
-            break;
-        }
-    }
-
-    core
+    // No lifecycle verb found, return as-is
+    name.to_string()
 }
 
 fn names_similar(name1: &str, name2: &str) -> bool {
@@ -372,10 +545,44 @@ mod tests {
 
     #[test]
     fn test_extract_core_name() {
+        // snake_case
         assert_eq!(extract_core_name("create_context"), "context");
         assert_eq!(extract_core_name("destroy_context"), "context");
         assert_eq!(extract_core_name("context_create"), "context");
         assert_eq!(extract_core_name("context_destroy"), "context");
+        
+        // camelCase (cudnn-style)
+        // The key insight: after stripping lifecycle verbs, the names should match
+        assert_eq!(extract_core_name("cudnnCreatePoolingDescriptor"), "cudnnPoolingDescriptor");
+        assert_eq!(extract_core_name("cudnnDestroyPoolingDescriptor"), "cudnnPoolingDescriptor");
+        assert_eq!(extract_core_name("cudnnCreateTensorDescriptor"), "cudnnTensorDescriptor");
+        assert_eq!(extract_core_name("cudnnDestroyTensorDescriptor"), "cudnnTensorDescriptor");
+        
+        // CUDA malloc/free pairs
+        println!("cudaMallocArray -> '{}'", extract_core_name("cudaMallocArray"));
+        println!("cudaFreeArray -> '{}'", extract_core_name("cudaFreeArray"));
+        assert_eq!(extract_core_name("cudaMallocArray"), "cudaArray");
+        assert_eq!(extract_core_name("cudaFreeArray"), "cudaArray");
+        assert_eq!(extract_core_name("cudaMallocHost"), "cudaHost");
+        assert_eq!(extract_core_name("cudaFreeHost"), "cudaHost");
+        
+        // Verify they match each other
+        assert_eq!(
+            extract_core_name("cudnnCreatePoolingDescriptor"),
+            extract_core_name("cudnnDestroyPoolingDescriptor")
+        );
+        assert_eq!(
+            extract_core_name("cudaMallocArray"),
+            extract_core_name("cudaFreeArray")
+        );
+        
+        // Mixed case
+        assert_eq!(extract_core_name("cuGraphCreate"), "cuGraph");
+        assert_eq!(extract_core_name("cuGraphDestroy"), "cuGraph");
+        
+        // Should NOT match partial words
+        assert_eq!(extract_core_name("creative"), "creative"); // Not "ative"
+        assert_eq!(extract_core_name("recreation"), "recreation"); // Not "reation"
     }
 
     #[test]

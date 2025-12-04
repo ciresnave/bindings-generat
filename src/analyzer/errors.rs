@@ -14,6 +14,7 @@ pub struct ErrorEnum {
     pub name: String,
     pub success_variant: Option<String>,
     pub error_variants: Vec<String>,
+    pub variant_docs: std::collections::HashMap<String, String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -102,10 +103,19 @@ fn identify_error_enums(enums: &[FfiEnum]) -> Vec<ErrorEnum> {
                 .map(|v| v.name.clone())
                 .collect();
 
+            // Build documentation map for all variants
+            let mut variant_docs = std::collections::HashMap::new();
+            for variant in &e.variants {
+                if let Some(docs) = &variant.docs {
+                    variant_docs.insert(variant.name.clone(), docs.clone());
+                }
+            }
+
             error_enums.push(ErrorEnum {
                 name: e.name.clone(),
                 success_variant,
                 error_variants,
+                variant_docs,
             });
         }
     }
@@ -214,10 +224,12 @@ mod tests {
                 FfiEnumVariant {
                     name: "StatusOk".to_string(),
                     value: Some(0),
+                    docs: Some("Operation succeeded".to_string()),
                 },
                 FfiEnumVariant {
                     name: "StatusError".to_string(),
                     value: Some(1),
+                    docs: Some("Operation failed".to_string()),
                 },
             ],
             docs: None,

@@ -1,5 +1,6 @@
 use anyhow::Result;
 use dialoguer::{Confirm, Select};
+use std::io::{self, Write};
 use tracing::info;
 
 use crate::analyzer::raii::{LifecyclePair, RaiiPatterns};
@@ -48,8 +49,12 @@ pub fn clarify_patterns(patterns: &RaiiPatterns) -> Result<ClarificationResults>
 
     println!("\n⚠️  Some lifecycle pairs need confirmation:");
     println!();
+    io::stdout().flush()?; // Ensure prompts are displayed
 
     for pair in low_confidence_pairs {
+        // Flush before each prompt to ensure visibility
+        io::stdout().flush()?;
+
         let should_confirm = Confirm::new()
             .with_prompt(format!(
                 "Is '{}' paired with '{}' for handle '{}'? (confidence: {:.0}%)",
@@ -94,6 +99,8 @@ pub fn select_destroy_function(
     }
 
     println!();
+    io::stdout().flush()?; // Ensure prompts are displayed
+
     let selection = Select::new()
         .with_prompt(format!(
             "Multiple possible destroy functions for '{}' (handle: '{}'). Which is correct?",
@@ -118,6 +125,7 @@ pub fn select_lifecycle_pairs(
         handle_type
     );
     println!();
+    io::stdout().flush()?; // Ensure prompts are displayed
 
     if create_candidates.is_empty() || destroy_candidates.is_empty() {
         return Ok(Vec::new());
@@ -132,6 +140,8 @@ pub fn select_lifecycle_pairs(
             .map(|d| d.to_string())
             .chain(std::iter::once("(None - skip this function)".to_string()))
             .collect();
+
+        io::stdout().flush()?; // Flush before each prompt
 
         let selection = Select::new()
             .with_prompt(format!(
@@ -153,6 +163,8 @@ pub fn select_lifecycle_pairs(
 /// Check if user wants to manually add a lifecycle pair not detected automatically
 pub fn prompt_manual_pair() -> Result<Option<(String, String, String)>> {
     println!();
+    io::stdout().flush()?;
+
     let add_manual = Confirm::new()
         .with_prompt("Would you like to manually specify a lifecycle pair that wasn't detected?")
         .default(false)
@@ -161,6 +173,8 @@ pub fn prompt_manual_pair() -> Result<Option<(String, String, String)>> {
     if !add_manual {
         return Ok(None);
     }
+
+    io::stdout().flush()?;
 
     let handle_type: String = dialoguer::Input::new()
         .with_prompt("Handle type name (e.g., 'MyHandle')")

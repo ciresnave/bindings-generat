@@ -2,6 +2,7 @@ use anyhow::Result;
 use tracing::{info, warn};
 
 use super::client::OllamaClient;
+use super::enhanced_context::EnhancedContext;
 use super::prompts;
 
 /// Documentation enhancer using LLM
@@ -49,6 +50,41 @@ impl DocsEnhancer {
         match self.client.generate(&self.model, &prompt) {
             Ok(docs) => {
                 info!("Generated enhanced documentation for {}", function_name);
+                Ok(Some(docs.trim().to_string()))
+            }
+            Err(e) => {
+                warn!("Failed to generate documentation: {}", e);
+                Ok(None)
+            }
+        }
+    }
+
+    /// Enhance documentation using enriched context
+    pub fn enhance_function_docs_with_context(
+        &self,
+        function_name: &str,
+        signature: &str,
+        base_context: &str,
+        enhanced_context: &EnhancedContext,
+    ) -> Result<Option<String>> {
+        if !self.is_available() {
+            info!("LLM not available, skipping documentation enhancement");
+            return Ok(None);
+        }
+
+        // Build enhanced context with all enrichment data
+        let full_context = enhanced_context.build_function_context(function_name, base_context);
+
+        info!("Using enhanced context: {}", enhanced_context.summary());
+
+        let prompt = prompts::documentation_prompt(function_name, signature, &full_context);
+
+        match self.client.generate(&self.model, &prompt) {
+            Ok(docs) => {
+                info!(
+                    "Generated enhanced documentation for {} using enrichment",
+                    function_name
+                );
                 Ok(Some(docs.trim().to_string()))
             }
             Err(e) => {
@@ -128,6 +164,45 @@ impl DocsEnhancer {
         match self.client.generate(&self.model, &prompt) {
             Ok(message) => {
                 info!("Enhanced error message for {}", error_code);
+                Ok(Some(message.trim().to_string()))
+            }
+            Err(e) => {
+                warn!("Failed to enhance error message: {}", e);
+                Ok(None)
+            }
+        }
+    }
+
+    /// Generate better error message using enriched context
+    pub fn enhance_error_message_with_context(
+        &self,
+        error_code: &str,
+        c_name: &str,
+        enhanced_context: &EnhancedContext,
+    ) -> Result<Option<String>> {
+        if !self.is_available() {
+            return Ok(None);
+        }
+
+        // Build enhanced context that might include documentation about this error
+        let context = enhanced_context.build_error_context(error_code, c_name);
+
+        let prompt = if context.contains(error_code) {
+            format!(
+                "Improve this error message for the Rust binding:\n\
+                 Error code: {}\n\
+                 C name: {}\n\n\
+                 Context:\n{}\n\n\
+                 Generate a clear, idiomatic Rust error message.",
+                error_code, c_name, context
+            )
+        } else {
+            prompts::error_message_prompt(error_code, c_name)
+        };
+
+        match self.client.generate(&self.model, &prompt) {
+            Ok(message) => {
+                info!("Enhanced error message for {} using enrichment", error_code);
                 Ok(Some(message.trim().to_string()))
             }
             Err(e) => {

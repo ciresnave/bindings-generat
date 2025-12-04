@@ -5,8 +5,6 @@ use tracing::{debug, info, warn};
 
 /// Format generated code using rustfmt
 pub fn format_code(output_dir: &Path) -> Result<()> {
-    info!("Formatting generated code with rustfmt");
-
     let lib_rs_path = output_dir.join("src").join("lib.rs");
 
     if !lib_rs_path.exists() {
@@ -24,12 +22,17 @@ pub fn format_code(output_dir: &Path) -> Result<()> {
     match output {
         Ok(output) => {
             if output.status.success() {
-                info!("Successfully formatted code");
+                info!("✓ Successfully formatted code");
             } else {
                 warn!("rustfmt exited with non-zero status");
                 if !output.stderr.is_empty() {
                     let stderr = String::from_utf8_lossy(&output.stderr);
-                    debug!("rustfmt stderr: {}", stderr);
+                    eprintln!("\n⚠️  rustfmt errors:\n{}", stderr);
+                    warn!("rustfmt stderr: {}", stderr);
+                }
+                if !output.stdout.is_empty() {
+                    let stdout = String::from_utf8_lossy(&output.stdout);
+                    debug!("rustfmt stdout: {}", stdout);
                 }
             }
         }
