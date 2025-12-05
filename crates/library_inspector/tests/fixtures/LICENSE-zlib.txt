@@ -1,0 +1,5 @@
+zlib license placeholder
+
+When adding a real zlib DLL fixture, include the full zlib license text here or a reference URL.
+
+zlib License terms: https://zlib.net/zlib_license.html

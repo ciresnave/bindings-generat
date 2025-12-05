@@ -9,6 +9,12 @@ use std::path::PathBuf;
 use std::process::Command;
 use undname::Flags as UndnameFlags;
 
+mod loader;
+mod bundling;
+
+pub use loader::Loader;
+pub use bundling::{bundle_library, license_allows_bundling};
+
 use object::SymbolKind;
 
 /// Per-export metadata discovered in a library/binary.
@@ -1114,12 +1120,23 @@ mod tests {
         assert_eq!(normalize_symbol(mangled), "world");
     }
 
-    // Optional network-based test: only runs when env var is set to '1'.
-    // Set `LIBRARY_INSPECTOR_RUN_REMOTE_TESTS=1` and `LIBRARY_INSPECTOR_ZLIB_DLL_URL`.
+    // Prefer local fixture if available; fallback to the previous env-gated remote test.
     #[test]
-    fn remote_fixture_zlib_if_enabled() {
+    fn fixture_zlib_or_remote_if_enabled() {
+        use std::path::PathBuf;
+
+        // try local fixture path first
+        let fixture_path = PathBuf::from(env!("CARGO_MANIFEST_DIR").to_string() + "/../tests/fixtures/zlib1.dll");
+        if fixture_path.exists() {
+            let insp = inspect_library(&fixture_path).expect("inspect local zlib fixture");
+            assert!(!insp.exports.is_empty(), "no exports found in local fixture");
+            assert!(insp.exports.iter().any(|e| e.ordinal.is_some()), "expect at least one ordinal");
+            return;
+        }
+
+        // fallback: behave like the old remote test when env var enabled
         if std::env::var("LIBRARY_INSPECTOR_RUN_REMOTE_TESTS").unwrap_or_default() != "1" {
-            eprintln!("Skipping remote fixture test (set LIBRARY_INSPECTOR_RUN_REMOTE_TESTS=1)");
+            eprintln!("Skipping zlib fixture test (no local fixture and remote tests disabled)");
             return;
         }
 
@@ -1135,7 +1152,6 @@ mod tests {
         let (path, _checksum) = download_and_cache(&url).expect("download zlib dll");
         let insp = inspect_library(&path).expect("inspect zlib");
         assert!(!insp.exports.is_empty(), "no exports found");
-        // Expect at least one export with an ordinal for PE DLLs
         assert!(insp.exports.iter().any(|e| e.ordinal.is_some()));
     }
 }

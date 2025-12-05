@@ -1,0 +1,4 @@
+This is a placeholder for the `zlib1.dll` redistributable fixture.
+
+Add the actual DLL (small, redistributable) and corresponding `zlib1.dll.sha256` checksum file.
+Ensure the LICENSE file above accompanies the binary.

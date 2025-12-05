@@ -50,6 +50,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libclang-dev llvm-dev
       
+      - name: Use cached fixtures
+        run: |
+          echo "Looking for fixtures in crates/library_inspector/tests/fixtures"
+          ls -la crates/library_inspector/tests/fixtures || true
+
       - name: Run tests
         timeout-minutes: 10
         run: cargo test --verbose -- --test-threads=2
