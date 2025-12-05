@@ -1,3 +1,14 @@
+# Ignore Rust build outputs
+**/target/
+
+# Profiling outputs
+*.profraw
+
+# Editor directories
+.vscode/
+
+# Ignore temporary backup files
+*.rs.bk
 # Rust
 /target/
 **/*.rs.bk
